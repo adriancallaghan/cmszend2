@@ -25,28 +25,30 @@
     
         
     <div class="span2">
-        <a href="<?php echo $this->url('object', array('action'=>'add'));?>" class="btn btn-large pull-right">Add new</a>
+        <a href="<?php echo $this->url('object', array('action'=>'add'));?>" class="btn btn-large pull-right"><i class="icon-plus"></i></a>
     </div>
 </div>
 	
 
-<table class="table">
-<tr>
-    <th>Title</th>
-    <th>Artist</th>
-    <th>Created</th>
-    <th>&nbsp;</th>
-</tr>
-<?php foreach ($this->paginator as $album) : ?>
-<tr>
-    <td><?php echo $this->escapeHtml($album->title);?></td>
-    <td><?php echo $this->escapeHtml($album->artist);?></td>
-    <td><?php echo $this->escapeHtml($album->created);?></td>
-    <td>
-        <pre><?php print_r($album->getArrayCopy()); ?></pre>
-        <a href="<?php echo $this->url('object',array('action'=>'edit', 'id' => $album->id));?>">Edit</a>
-        <a href="<?php echo $this->url('object',array('action'=>'delete', 'id' => $album->id));?>">Delete</a>  
-    </td>
-</tr>
-<?php endforeach; ?>
+<table class="table table-striped">
+    <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Created</th>
+        <th>&nbsp;</th>
+    </tr>
+    <?php foreach ($this->paginator as $album) : ?>
+        <tr>
+            <td><?php echo $this->escapeHtml($album->title);?></td>
+            <td><?php echo $this->escapeHtml($album->artist);?></td>
+            <td><?php echo $this->escapeHtml($album->created);?></td>
+            <td>
+                <pre><?php print_r($album->getArrayCopy()); ?></pre>
+                <div class="btn-group pull-right">
+                    <a href="<?php echo $this->url('object',array('action'=>'edit', 'id' => $album->id));?>" class="btn"><i class="icon-pencil"></i></a>
+                    <a href="<?php echo $this->url('object',array('action'=>'delete', 'id' => $album->id));?>" class="btn"><i class="icon-trash"></i></a> 
+                </div>
+            </td>
+        </tr>
+    <?php endforeach; ?>
 </table>
