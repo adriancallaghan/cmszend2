@@ -1,0 +1,26 @@
+html {
+    height: 100%;
+}
+
+body {
+    padding: 60px 0 40px 0;
+    position:relative;
+    height: -moz-calc(100% - 200px); /* Firefox */
+    height: -webkit-calc(100% - 200px); /* WebKit */
+    height: -o-calc(100% - 200px); /* Opera */
+    height: calc(100% - 200px); /* Standard */    
+}
+
+/*
+Block level elements
+*/
+div.main-navigation{}
+div.main-message {}
+div.main-content {height:100%; min-height:100%;}
+
+
+/* USED FOR DEBUGGING ELEMENTS */
+.bgd-yellow {background:yellow;}
+.bgd-red {background:#ffaaaa;}
+.bgd-blue {background:#aaaaff;}
+.bgd-green {background:#aaffaa;}

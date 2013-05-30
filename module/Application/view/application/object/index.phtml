@@ -1,0 +1,52 @@
+
+
+
+<?php $this->headTitle($this->title); ?>
+
+<h1><?php echo $this->escapeHtml($this->title); ?></h1>
+
+<div class="row">
+
+    <div class="span10">
+        <?php // add at the end of the file after the table
+        echo $this->paginationControl(
+            // the paginator object
+            $this->paginator,
+            'sliding',
+            // the partial to use to render the control
+            array('partial/paginator.phtml', 'Album'),
+            // the route to link to when a user clicks a control link
+            array(
+                'route' => 'object'
+            )
+        );
+        ?>
+    </div>
+    
+        
+    <div class="span2">
+        <a href="<?php echo $this->url('object', array('action'=>'add'));?>" class="btn btn-large pull-right">Add new</a>
+    </div>
+</div>
+	
+
+<table class="table">
+<tr>
+    <th>Title</th>
+    <th>Artist</th>
+    <th>Created</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($this->paginator as $album) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($album->title);?></td>
+    <td><?php echo $this->escapeHtml($album->artist);?></td>
+    <td><?php echo $this->escapeHtml($album->created);?></td>
+    <td>
+        <pre><?php print_r($album->getArrayCopy()); ?></pre>
+        <a href="<?php echo $this->url('object',array('action'=>'edit', 'id' => $album->id));?>">Edit</a>
+        <a href="<?php echo $this->url('object',array('action'=>'delete', 'id' => $album->id));?>">Delete</a>  
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
