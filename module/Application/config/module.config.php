@@ -10,7 +10,7 @@
 return array(
     'router' => array(
         'routes' => array(
-            /*'home' => array(
+            'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
                     'route'    => '/',
@@ -21,79 +21,6 @@ return array(
                 ),
             ),           
             
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
-            'application' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/application',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            
-            
-            /*'test' => array(
-                'type' => 'literal',
-                'options' => array(
-                    'route' => '/test',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller'    => 'Test',
-                        'action'        => 'index',
-                    ),
-                ),
-            ),*/
-            
-            'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller' => 'Object',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
-            
-            
-            'object' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/object[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller' => 'Object',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),            
-            
         ),
     ),
     'navigation' => array(
@@ -101,28 +28,7 @@ return array(
             array(
                 'label' => 'Home',
                 'route' => 'home',
-            ),
-            array(
-                'label' => 'Album',
-                'route' => 'object',
-                'pages' => array(
-                    array(
-                        'label' => 'Add',
-                        'route' => 'object',
-                        'action' => 'add',
-                    ),
-                    array(
-                        'label' => 'Edit',
-                        'route' => 'object',
-                        'action' => 'edit',
-                    ),
-                    array(
-                        'label' => 'Delete',
-                        'route' => 'object',
-                        'action' => 'delete',
-                    ),
-                ),
-            ),
+            ),            
         ),
     ),
     'service_manager' => array(
@@ -150,8 +56,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Test' => 'Application\Controller\TestController',
-            'Application\Controller\Object' => 'Application\Controller\ObjectController'
+            //'Application\Controller\Test' => 'Application\Controller\TestController',
+            //'Application\Controller\Object' => 'Application\Controller\ObjectController'
         ),
     ),
     'view_manager' => array(

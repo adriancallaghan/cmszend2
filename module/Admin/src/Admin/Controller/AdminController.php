@@ -7,7 +7,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application\Controller;
+namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -16,7 +16,7 @@ use Application\Form\AlbumForm;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
-class ObjectController extends AbstractActionController
+class AdminController extends AbstractActionController
 {
     
     protected $albumTable;
@@ -53,7 +53,7 @@ class ObjectController extends AbstractActionController
         
         return new ViewModel(array(
             'paginator' => $paginator,
-            'title'     => 'HelloWorld!',
+            'title'     => 'Admin',
             'flashMessages' => $this->flashMessenger()->getMessages(),
         ));
 
@@ -82,7 +82,7 @@ class ObjectController extends AbstractActionController
                 //$this->flashMessenger()->addMessage(array('alert-error'=>'Sorry, Error.')); 
                 
                 // Redirect to list of albums
-                return $this->redirect()->toRoute('object');
+                return $this->redirect()->toRoute('admin');
             } else {
                 //$this->flashMessenger()->addMessage(array('alert-error'=>'Form error'));
             }
@@ -121,7 +121,7 @@ class ObjectController extends AbstractActionController
                 //$this->flashMessenger()->addMessage(array('alert-error'=>'Sorry, Error.')); 
                 
                 // Redirect to list of albums
-                return $this->redirect()->toRoute('object');
+                return $this->redirect()->toRoute('admin');
             } else {
                 //$this->flashMessenger()->addMessage(array('alert-error'=>'Form error'));
             }
@@ -137,7 +137,7 @@ class ObjectController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('object');
+            return $this->redirect()->toRoute('admin');
         }
 
         $request = $this->getRequest();
@@ -151,7 +151,7 @@ class ObjectController extends AbstractActionController
             } 
             
             // Redirect to list of albums
-            return $this->redirect()->toRoute('object');
+            return $this->redirect()->toRoute('admin');
         }
 
         return array(

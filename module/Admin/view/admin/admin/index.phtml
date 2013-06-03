@@ -5,19 +5,20 @@
 
 <h1><?php echo $this->escapeHtml($this->title); ?></h1>
 
+
 <div class="row">
 
     <div class="span10">
         <?php // add at the end of the file after the table
         echo $this->paginationControl(
-            // the paginator object
+            // the paginator admin
             $this->paginator,
             'sliding',
             // the partial to use to render the control
             array('partial/paginator.phtml', 'Album'),
             // the route to link to when a user clicks a control link
             array(
-                'route' => 'object'
+                'route' => 'admin'
             )
         );
         ?>
@@ -25,7 +26,7 @@
     
         
     <div class="span2">
-        <a href="<?php echo $this->url('object', array('action'=>'add'));?>" class="btn btn-large pull-right"><i class="icon-plus"></i></a>
+        <a href="<?php echo $this->url('admin', array('action'=>'add'));?>" class="btn btn-large pull-right"><i class="icon-plus"></i></a>
     </div>
 </div>
 	
@@ -45,8 +46,8 @@
             <td>
                 <pre><?php print_r($album->getArrayCopy()); ?></pre>
                 <div class="btn-group pull-right">
-                    <a href="<?php echo $this->url('object',array('action'=>'edit', 'id' => $album->id));?>" class="btn"><i class="icon-pencil"></i></a>
-                    <a href="<?php echo $this->url('object',array('action'=>'delete', 'id' => $album->id));?>" class="btn"><i class="icon-trash"></i></a> 
+                    <a href="<?php echo $this->url('admin',array('action'=>'edit', 'id' => $album->id));?>" class="btn"><i class="icon-pencil"></i></a>
+                    <a href="<?php echo $this->url('admin',array('action'=>'delete', 'id' => $album->id));?>" class="btn"><i class="icon-trash"></i></a> 
                 </div>
             </td>
         </tr>
