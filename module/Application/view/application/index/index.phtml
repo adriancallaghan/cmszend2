@@ -1,12 +1,15 @@
 
-<div class="hero-unit">
-    <h3>Json test</h3>
+<div class="hero-unit title">
+    <h4>Json test</h4>
+    Use firebug to see the response
+    <h5>Url: <span id="url">/rest</span></h5>
+    Update & get, can fail because the the server responds with an error, this is because the id used is random and it is not always found on the server
 </div>
 
 <div class="row">
 
-    <div class="span6">
-        <div class="btn-group">        
+    <div class="span2">
+        <div class="btn-group btn-group-vertical">        
             <button class="btn list">List /</button>
             <button class="btn get">Get / ID</button> 
             <button class="btn post">Create / POST</button>
@@ -15,8 +18,8 @@
         </div>     
     </div>
         
-    <div class="span6">
-        <pre class="output" style="height:300px;"></pre>
+    <div class="span10">
+        <pre class="output" style="height:150px;"></pre>
     </div>
         
 </div>
@@ -26,7 +29,7 @@
 <script type="text/javascript">
 
 
-    var url = "/rest";
+    var url = $('#url').text();
     var outputElem = $('pre.output');
     var listElem = $('.list');  
     var getElem = $('.get');  
@@ -42,7 +45,6 @@
 
     $().ready(function(){
         
-        
         // demo list interaction
         listElem.click(function(){
             
@@ -50,7 +52,7 @@
                 url: url,
                 type: 'GET',
                 success: function(response) {
-                    outputElem.text('Length: ' + response.data.length); 
+                    outputElem.text('List: ' + JSON.stringify(response.data)); 
                 }
             });
             
@@ -66,7 +68,10 @@
                 url: url + '/' + random_id,
                 type: 'GET',
                 success: function(response) {
-                    outputElem.text('Getting ' + response.data); 
+                    outputElem.text('Get: ' + JSON.stringify(response.data)); 
+                },
+                error: function(jqXHR, textStatus, error){
+                    outputElem.text('Failed: ' + error); 
                 }
             });
             
@@ -84,7 +89,7 @@
                 type: 'POST',
                 data: {artist:random_artist,title:random_title},
                 success: function(response) {
-                    outputElem.text('Added'); 
+                    outputElem.text('Added: ' + JSON.stringify(response.data));                    
                 }
             });
             
@@ -104,7 +109,10 @@
                 type: 'PUT',
                 data: {artist:random_artist,title:random_title},
                 success: function(response) {
-                    outputElem.text('Updated'); 
+                    outputElem.text('Updated: ' + JSON.stringify(response.data)); 
+                },
+                error: function(jqXHR, textStatus, error){
+                    outputElem.text('Failed: ' + error); 
                 }
             });
            
@@ -121,7 +129,7 @@
                 url: url + "/" + random_id,
                 type: 'DELETE',
                 success: function(response) {
-                    outputElem.text('deleted'); 
+                    outputElem.text('Deleted: ' + JSON.stringify(response.data)); 
                 }
             });
 
