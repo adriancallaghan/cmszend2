@@ -21,18 +21,52 @@ return array(
 
     'router' => array(
         'routes' => array(
-            'admin' => array(
+            /*'admin' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/admin[/:action][/]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller', // this was commented out before
+                        'controller' => 'Index',
+                        //'controller' => 'Admin\Controller\Index',
+                        'action'     => 'index',
+                    ),
+                ),
+            ), */
+            'home' => array(
                 'type'    => 'segment',
                 'options' => array(
                     'route'    => '/admin[/]',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Admin\Controller', // this was commented out before
+                        '__NAMESPACE__' => 'Admin\Controller',
                         'controller' => 'Index',
-                        //'controller' => 'Admin\Controller\Admin',
                         'action'     => 'index',
                     ),
                 ),
-            ), 
+            ),
+            'login' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/admin/login[/]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Index',
+                        'action'     => 'login',
+                    ),
+                ),
+            ),
+            'logout' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/admin/logout[/]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Index',
+                        'action'     => 'logout',
+                    ),
+                ),
+            ),
+            
             'album' => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -54,10 +88,22 @@ return array(
     
     
     'navigation' => array(
-        'secondary' => array(
+        'admin' => array(
             'Home' => array(
                 'label' => 'Home',
-                'route' => 'admin',
+                'route' => 'home',
+                'pages' => array(
+                    array(
+                        'label' => 'Login',
+                        'route' => 'login',
+                        'action' => 'login',
+                    ),
+                    array(
+                        'label' => 'Logout',
+                        'route' => 'logout',
+                        'action' => 'logout',
+                    ),
+                )
             ),
             'Albums' => array(
                 'label' => 'Albums',
@@ -86,16 +132,13 @@ return array(
     
     'service_manager' => array(
         'factories' => array(
-            'secondary_navigation' => 'Admin\Navigation\Service\SecondaryNavigationFactory'
+            'admin_navigation' => 'Admin\Navigation\Service\AdminNavigationFactory',            
         ),
+        'services' => array(
+            'Authentication' => new Zend\Authentication\AuthenticationService(),
+        )
     ),
-    
-    /*
-    'services' => array(
-            // Keys are the service names
-            // Values are objects
-            'Auth' => new SomeModule\Authentication\AuthenticationService(),
-    ),*/
+
     
     
     'view_manager' => array(

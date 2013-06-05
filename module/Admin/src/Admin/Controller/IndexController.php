@@ -10,7 +10,6 @@
 namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Authentication\AuthenticationService;
 use Zend\View\Model\ViewModel;
 
 
@@ -29,26 +28,21 @@ class IndexController extends AbstractActionController
         $this->flashMessenger()->addMessage(array('alert-error'=>'Sorry, Error.')); 
         */
         
-        $auth = new AuthenticationService();
-
-        $identity = null;
-        if ($auth->hasIdentity()) {
-            // Identity exists; get it
-            $identity = $auth->getIdentity();
-        }
-
-
-        //$debug = $this->getServiceLocator()->get('secondary_navigation');
-        $debug = $auth;
-        
         
         
         return new ViewModel(array(
             'title'     => 'Home',
-            'flashMessages' => $this->flashMessenger()->getMessages(),
-            'debug'=>$debug
+            'flashMessages' => $this->flashMessenger()->getMessages()
         ));
 
+    }
+    
+    public function loginAction(){
+        
+    }
+    
+    public function logoutAction(){
+        
     }
 
 }
