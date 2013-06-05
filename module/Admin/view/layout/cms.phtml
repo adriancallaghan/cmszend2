@@ -26,19 +26,20 @@
     <body>
         
         <!-- Nav bar -->
-        <div class="navbar navbar-fixed-top navbar-inverse">
+        <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a href="<?php echo $this->url('home') ?>" class="brand">FrontEnd - <?php echo $this->translate('Brand') ?></a>
+                    <a href="<?php echo $this->url('home') ?>" class="brand">Backend - <?php echo $this->translate('Brand') ?></a>
                     <div class="nav-collapse collapse">
                         <?php
-                        echo $this->navigation('navigation')
+                        echo $this->navigation('secondary_navigation')
                             ->menu()
                             ->setMinDepth(0)
                             ->setMaxDepth(0)
                             ->setUlClass('nav')
                             ->render();
                         ?>
+                        <?php //echo $this->navigation('secondary_navigation')->menu(); ?>
                         <form class="navbar-search pull-right">
                             <input type="text" class="search-query" placeholder="Search">
                         </form>

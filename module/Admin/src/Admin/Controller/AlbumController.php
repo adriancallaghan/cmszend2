@@ -15,8 +15,11 @@ use Application\Model\Album;
 use Application\Form\AlbumForm;       
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use Zend\Authentication\AuthenticationService;
+use Zend\Authentication\Adapter\DbTable as AuthAdapter;
+use Zend\Authentication\Result as Result;
 
-class AdminController extends AbstractActionController
+class AlbumController extends AbstractActionController
 {
     
     protected $albumTable;
@@ -34,21 +37,12 @@ class AdminController extends AbstractActionController
     public function indexAction()
     {
         
-
         // grab the paginator from the AlbumTable
         $paginator = $this->getAlbumTable()->fetchAll(true);
         
         // set the current page to what has been passed in query string, or to 1 if none set
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1))
                 ->setItemCountPerPage(2);
-
-
-        /*
-        $this->flashMessenger()->addMessage('You must do something.');           
-        $this->flashMessenger()->addMessage(array('alert-info'=>'Soon this changes.'));           
-        $this->flashMessenger()->addMessage(array('alert-success'=>'Well done!'));           
-        $this->flashMessenger()->addMessage(array('alert-error'=>'Sorry, Error.')); 
-        */
         
         
         return new ViewModel(array(
@@ -82,7 +76,7 @@ class AdminController extends AbstractActionController
                 //$this->flashMessenger()->addMessage(array('alert-error'=>'Sorry, Error.')); 
                 
                 // Redirect to list of albums
-                return $this->redirect()->toRoute('admin');
+                return $this->redirect()->toRoute('album');
             } else {
                 //$this->flashMessenger()->addMessage(array('alert-error'=>'Form error'));
             }
@@ -96,7 +90,7 @@ class AdminController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('object', array(
+            return $this->redirect()->toRoute('album', array(
                 'action' => 'add'
             ));
         }
@@ -121,7 +115,7 @@ class AdminController extends AbstractActionController
                 //$this->flashMessenger()->addMessage(array('alert-error'=>'Sorry, Error.')); 
                 
                 // Redirect to list of albums
-                return $this->redirect()->toRoute('admin');
+                return $this->redirect()->toRoute('album');
             } else {
                 //$this->flashMessenger()->addMessage(array('alert-error'=>'Form error'));
             }
@@ -137,7 +131,7 @@ class AdminController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('admin');
+            return $this->redirect()->toRoute('album');
         }
 
         $request = $this->getRequest();
@@ -151,7 +145,7 @@ class AdminController extends AbstractActionController
             } 
             
             // Redirect to list of albums
-            return $this->redirect()->toRoute('admin');
+            return $this->redirect()->toRoute('album');
         }
 
         return array(

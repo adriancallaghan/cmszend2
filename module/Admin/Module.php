@@ -10,6 +10,9 @@
 namespace Admin;
 
 
+use Zend\ModuleManager\ModuleManager;
+
+
 class Module
 {
 
@@ -31,6 +34,15 @@ class Module
             ),
         );
     }
+    
+    
+     public function init(ModuleManager $mm)
+    {
+        $mm->getEventManager()->getSharedManager()->attach(__NAMESPACE__, 'dispatch', function($e) {
+            $e->getTarget()->layout('admin/layout');
+        });
+    }
+   
     
 
 }

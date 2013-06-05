@@ -11,49 +11,57 @@
 
 
 return array(
+
     'controllers' => array(
         'invokables' => array(
-            'Admin\Controller\Admin' => 'Admin\Controller\AdminController',
+            'Admin\Controller\Index' => 'Admin\Controller\IndexController',
+            'Admin\Controller\Album' => 'Admin\Controller\AlbumController',
         ),
     ),
 
-
-
     'router' => array(
         'routes' => array(
-
             'admin' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/admin[/:action][/:id]',
+                    'route'    => '/admin[/]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller', // this was commented out before
+                        'controller' => 'Index',
+                        //'controller' => 'Admin\Controller\Admin',
+                        'action'     => 'index',
+                    ),
+                ),
+            ), 
+            'album' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/admin/album/[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Admin\Controller', // this was commented out before
-                        'controller' => 'Admin',
-                        //'controller' => 'Admin\Controller\Admin',
+                        '__NAMESPACE__' => 'Admin\Controller', 
+                        'controller' => 'Album',
                         'action'     => 'index',
                     ),
                 ),
-            ),   
+            ), 
 
         ),
-    ),
-
-    'view_manager' => array(
-        'template_path_stack' => array(
-            'admin' => __DIR__ . '/../view',
-        ),
-    ),
+    ),   
     
     
     'navigation' => array(
-        'default' => array(            
-            array(
-                'label' => 'Admin',
+        'secondary' => array(
+            'Home' => array(
+                'label' => 'Home',
                 'route' => 'admin',
+            ),
+            'Albums' => array(
+                'label' => 'Albums',
+                'route' => 'album',
                 'pages' => array(
                     array(
                         'label' => 'Add',
@@ -70,8 +78,32 @@ return array(
                         'route' => 'album',
                         'action' => 'delete',
                     ),
-                ),
+                )
             ),
+        ),
+    ),
+    
+    
+    'service_manager' => array(
+        'factories' => array(
+            'secondary_navigation' => 'Admin\Navigation\Service\SecondaryNavigationFactory'
+        ),
+    ),
+    
+    /*
+    'services' => array(
+            // Keys are the service names
+            // Values are objects
+            'Auth' => new SomeModule\Authentication\AuthenticationService(),
+    ),*/
+    
+    
+    'view_manager' => array(
+        'template_map' => array(
+            'admin/layout'           => __DIR__ . '/../view/layout/cms.phtml',
+        ),
+        'template_path_stack' => array(
+            __DIR__ . '/../view',
         ),
     ),
 
