@@ -6,7 +6,7 @@ return array(
         'Admin',
         'Rest',              
         'DluTwBootstrap',
-        //'DluTwBootstrapDemo',
+        //'DluTwBootstrapDemo', // url is /tw-bootstrap-demo
     ),
 
     // These are various options for the listeners attached to the ModuleManager

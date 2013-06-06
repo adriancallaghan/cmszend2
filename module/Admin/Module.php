@@ -9,7 +9,7 @@
 
 namespace Admin;
 
-
+use Zend\Loader;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
@@ -23,7 +23,7 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
     
-    public function getAutoloaderConfig()
+    /*public function getAutoloaderConfig()
     {
         return array(
             'Zend\Loader\ClassMapAutoloader' => array(
@@ -35,7 +35,18 @@ class Module
                 ),
             ),
         );
+    }*/
+    public function getAutoloaderConfig()
+    {
+        return array(
+            Loader\AutoloaderFactory::STANDARD_AUTOLOADER => array(
+                Loader\StandardAutoloader::LOAD_NS => array(
+                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+                ),
+            ),
+        );
     }
+
     
     
     public function init(ModuleManager $mm)
@@ -44,13 +55,28 @@ class Module
         $mm->getEventManager()->getSharedManager()->attach(__NAMESPACE__, 'dispatch', function($e) {
            
             
-            // sets layout
+            // change layout
             $e->getTarget()->layout('admin/layout');
-            ////////
+            //////////////////
             
             // restricts access
-            if (!$e->getApplication()->getServiceManager()->get('Authentication')->hasIdentity()) {
+            $this->restrictAccess($e);
+            //////////////////
+            
+            
+        });
+    }
+    
+   
+    public function restrictAccess(MvcEvent $e, array $whiteListed = array(), $loginRouteName = 'admin/login'){
+        
+        // $loginRouteName is whitelisted from the redirection
+        // The redirection is to the $loginRouteName 
+        // additional routes can be whitelisted
+        if (!$e->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService')->hasIdentity()) {
                 
+                $whiteListed[] = $loginRouteName;
+            
                 $match = $e->getRouteMatch();
 
                 // No route match, this is a 404
@@ -59,12 +85,12 @@ class Module
                 }
 
                 // Login route is whitelisted
-                if (in_array($match->getMatchedRouteName(), array('login'))) {
+                if (in_array($match->getMatchedRouteName(), $whiteListed)) {
                     return;
                 }
                 
                 // login url from login route
-                $url = $e->getRouter()->assemble(array(), array('name' => 'login'));
+                $url = $e->getRouter()->assemble(array(), array('name' => $loginRouteName));
 
                 // redirect response
                 $response = $e->getResponse();
@@ -72,14 +98,9 @@ class Module
                 $response->setStatusCode(302);
 
                 return $response;
-            }
-            //////////////////
-            
-            
-        });
+        }
+        
     }
-    
-   
    
    
 }

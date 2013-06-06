@@ -31,18 +31,26 @@
                 <div class="container">
                     <a href="<?php echo $this->url('home') ?>" class="brand">Backend - <?php echo $this->translate('Brand') ?></a>
                     <div class="nav-collapse collapse">
-                        <?php
-                        echo $this->navigation('admin_navigation')
-                            ->menu()
-                            ->setMinDepth(0)
-                            ->setMaxDepth(0)
-                            ->setUlClass('nav')
-                            ->render();
-                        ?>
-                        <?php //echo $this->navigation('secondary_navigation')->menu(); ?>
-                        <form class="navbar-search pull-right">
-                            <input type="text" class="search-query" placeholder="Search">
-                        </form>
+                        <?php if ($this->identity()):
+                            
+                            echo $this->navigation('admin_navigation')
+                                ->menu()
+                                ->setMinDepth(0)
+                                ->setMaxDepth(0)
+                                ->setUlClass('nav')
+                                ->render();
+                        ?>               
+                        <div class="btn-group pull-right">
+                            <a class="btn dropdown-toggle btn-primary" data-toggle="dropdown" href="#">
+                                <i class="icon-user icon-white"></i>&nbsp;<?php echo $this->identity(); ?>&nbsp;<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">  
+                                <li><a href="<?php echo $this->url('admin/logout', array()); ?>"><i class="icon-user"></i> Change Password</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<?php echo $this->url('admin/logout', array()); ?>"><i class="icon-lock"></i></i> Logout</a></li>
+                            </ul>
+                        </div>
+                        <?php endif; ?>           
                     </div>
                 </div>
             </div>
@@ -51,8 +59,9 @@
         
         
         <div class="main-content container">
-            
+     
             <?php
+   
             
             $ourView = current($this->viewModel()->getCurrent()->getChildren());
 
@@ -71,31 +80,8 @@
             <?php endif; ?>
             
             
-            <?php echo $this->content; ?>
-            
-            
-            <!--
-            Example content, a nested grid layout that could be used within the content
-            <div class="row">
-                <div class="span4 bgd-green">
-                    <div class="row">
-                        <div class="span1 bgd-red">green</div>
-                        <div class="span3 bgd-red">green</div>  
-                    </div>
-                </div>
-                <div class="span4 bgd-red">red</div>
-                <div class="span4 bgd-blue">blue</div>
-            </div>
-
-            -->
-            
-            
-            
-            <!--hr>
-            <footer>
-                <p>&copy; 2012 - <?php echo date('Y') ?> Testing</p>
-            </footer>-->    
-            
+            <?php echo $this->content; ?>            
+                     
             
         </div> <!-- /container -->
         

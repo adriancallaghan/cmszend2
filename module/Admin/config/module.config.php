@@ -21,52 +21,37 @@ return array(
 
     'router' => array(
         'routes' => array(
-            /*'admin' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/admin[/:action][/]',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Admin\Controller', // this was commented out before
-                        'controller' => 'Index',
-                        //'controller' => 'Admin\Controller\Index',
-                        'action'     => 'index',
-                    ),
-                ),
-            ), */
-            'home' => array(
+            'admin' => array(
                 'type'    => 'segment',
                 'options' => array(
                     'route'    => '/admin[/]',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Admin\Controller',
-                        'controller' => 'Index',
+                        'controller' => 'Admin\Controller\Index',
                         'action'     => 'index',
                     ),
                 ),
-            ),
-            'login' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/admin/login[/]',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Admin\Controller',
-                        'controller' => 'Index',
-                        'action'     => 'login',
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'login' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => 'login',
+                            'defaults' => array(
+                                'action' => 'login'
+                            )
+                        )
                     ),
+                    'logout' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => 'logout',
+                            'defaults' => array(
+                                'action' => 'logout'
+                            )
+                        )
+                    )
                 ),
-            ),
-            'logout' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/admin/logout[/]',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Admin\Controller',
-                        'controller' => 'Index',
-                        'action'     => 'logout',
-                    ),
-                ),
-            ),
-            
+            ),        
             'album' => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -91,7 +76,7 @@ return array(
         'admin' => array(
             'Home' => array(
                 'label' => 'Home',
-                'route' => 'home',
+                'route' => 'admin',
                 'pages' => array(
                     array(
                         'label' => 'Login',
@@ -131,11 +116,18 @@ return array(
     
     
     'service_manager' => array(
+        
+        /*
+        'Admin\Authentication\Service' => function($sm) {
+            $authService = new \Zend\Authentication\AuthenticationService();
+            $authService->setStorage(new \Zend\Authentication\Storage\Session('user', 'details'));
+            return $authService;
+        },*/
         'factories' => array(
             'admin_navigation' => 'Admin\Navigation\Service\AdminNavigationFactory',            
         ),
         'services' => array(
-            'Authentication' => new Zend\Authentication\AuthenticationService(),
+            'Zend\Authentication\AuthenticationService' => new Zend\Authentication\AuthenticationService(),
         )
     ),
 
