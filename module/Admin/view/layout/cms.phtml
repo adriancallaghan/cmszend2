@@ -31,8 +31,7 @@
                 <div class="container">
                     <a href="<?php echo $this->url('home') ?>" class="brand">Backend - <?php echo $this->translate('Brand') ?></a>
                     <div class="nav-collapse collapse">
-                        <?php if ($this->identity()):
-                            
+                        <?php if ($this->identity()):                            
                             echo $this->navigation('admin_navigation')
                                 ->menu()
                                 ->setMinDepth(0)
@@ -41,7 +40,7 @@
                                 ->render();
                         ?>               
                         <div class="btn-group pull-right">
-                            <a class="btn dropdown-toggle btn-primary" data-toggle="dropdown" href="#">
+                            <a class="btn dropdown-toggle btn-inverse user-indentity" data-toggle="dropdown" href="#">
                                 <i class="icon-user icon-white"></i>&nbsp;<?php echo $this->identity(); ?>&nbsp;<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">  

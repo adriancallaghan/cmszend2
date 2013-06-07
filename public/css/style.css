@@ -18,6 +18,12 @@ div.main-navigation{}
 div.main-message {}
 div.main-content {height:100%; min-height:100%;}
 
+/*
+CMS
+*/
+.user-indentity {
+    text-transform: capitalize;
+}
 
 /* USED FOR DEBUGGING ELEMENTS */
 .bgd-yellow {background:yellow;}
