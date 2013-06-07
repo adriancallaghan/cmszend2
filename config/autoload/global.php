@@ -11,7 +11,8 @@
  * file.
  */
 
-return array(
+return array(    
+    // pdo mysql
     'db' => array(
         'driver'         => 'Pdo',
         'dsn'            => 'mysql:dbname=test;host=localhost',
@@ -19,6 +20,21 @@ return array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
     ),
+    // Doctrine config
+    /*'doctrine' => array(
+        'driver' => array(
+            __NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                )
+            )
+        )
+    ),*/
     'service_manager' => array(
         'factories' => array(
             'Zend\Db\Adapter\Adapter'

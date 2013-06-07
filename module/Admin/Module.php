@@ -51,10 +51,11 @@ class Module
     
     public function init(ModuleManager $mm)
     {
-        // tells the last module, to have the follwoign rules applied to it
+        // tells the last module, to have the following rules applied to it
         $mm->getEventManager()->getSharedManager()->attach(__NAMESPACE__, 'dispatch', function($e) {
            
-            
+            //var_dump($e->getResponse()->getStatusCode());
+
             // change layout
             $e->getTarget()->layout('admin/layout');
             //////////////////

@@ -46,7 +46,7 @@ class Module
     public function getServiceConfig()
     {
         return array(
-            'factories' => array(
+            /*'factories' => array(
                 'Application\Model\AlbumTable' =>  function($sm) {
                     $tableGateway = $sm->get('AlbumTableGateway');
                     $table = new AlbumTable($tableGateway);
@@ -58,7 +58,7 @@ class Module
                     $resultSetPrototype->setArrayObjectPrototype(new Album());
                     return new TableGateway('album', $dbAdapter, null, $resultSetPrototype);
                 },
-            ),
+            ),*/
         );
     }
 

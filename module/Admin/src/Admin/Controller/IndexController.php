@@ -9,11 +9,10 @@
 
 namespace Admin\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
-use Admin\Form\LoginForm; 
-use Zend\Authentication\Adapter\DbTable as AuthAdapter;
-use Zend\Authentication\Result as Result;
+use Zend\Mvc\Controller\AbstractActionController,
+Zend\View\Model\ViewModel,
+Admin\Form\LoginForm,
+Zend\Authentication\Adapter\DbTable as AuthAdapter;
 
 class IndexController extends AbstractActionController
 {
@@ -21,7 +20,7 @@ class IndexController extends AbstractActionController
     
     public function indexAction()
     {
-
+        
         /*
         $this->flashMessenger()->addMessage('You must do something.');           
         $this->flashMessenger()->addMessage(array('alert-info'=>'Soon this changes.'));           

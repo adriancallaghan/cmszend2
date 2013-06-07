@@ -12,7 +12,8 @@
         "zendframework/zendframework": ">2.2.0rc1",
         "doctrine/doctrine-orm-module": "dev-master",
         "dlu/dlutwbootstrap": "dev-master",
-        "dlu/dlutwbootstrapdemo": "dev-master"
+        "dlu/dlutwbootstrapdemo": "dev-master",
+        "zendframework/zend-developer-tools": "dev-master"
     },
     "minimum-stability": "dev" 
 }

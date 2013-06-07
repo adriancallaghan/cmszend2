@@ -10,68 +10,39 @@
 namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;  
+use Zend\View\Model\ViewModel;
+use Application\Model\Album;          
 use Application\Form\AlbumForm;       
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Zend\Paginator\Paginator;
-
-
-
+use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use Zend\Authentication\AuthenticationService;
+use Zend\Authentication\Adapter\DbTable as AuthAdapter;
+use Zend\Authentication\Result as Result;
 
 class AlbumController extends AbstractActionController
 {
-
+    
+    protected $albumTable;
+    
+    public function getAlbumTable()
+    {
+        if (!$this->albumTable) {
+            $sm = $this->getServiceLocator();
+            $this->albumTable = $sm->get('Application\Model\AlbumTable');
+        }
+        return $this->albumTable;
+    }
+    
     
     public function indexAction()
     {
         
         // grab the paginator from the AlbumTable
-        /*$results = $this->getEntityManager()->getRepository('Application\Entity\Album')->findAll();
-        
-        // Create the paginator itself
-        $paginator = new Paginator(new Adapter($results));
+        $paginator = $this->getAlbumTable()->fetchAll(true);
         
         // set the current page to what has been passed in query string, or to 1 if none set
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1))
                 ->setItemCountPerPage(2);
-        */
-        
-
-
-
-        //$paginator = new ZendPaginator(new PaginatorAdapter(new ORMPaginator($albumModel->createQueryBuilder('*'))));
-        
-        /*$paginator = new Paginator(
-            new DoctrinePaginator(new ORMPaginator($query))
-        );*/
-
-        //$repository = $this->getEntityManager()->getRepository('Application\Entity\Album');
-        //$query = $repository->findAll();
-        
-        
-        $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        $qb = $em->createQueryBuilder();
-        
-        $qb->select('e')->from('Application\Entity\Album','e');
-
-        // Sorting
-        //$qb->addOrderBy('p.' . $input->sort, $input->dir);
-
-        $q = $qb->getQuery();
-
-        
-        $articles = $q->getResult(); // array of CmsArticle objects
-        var_dump($articles);
-        
-        
-        $adapter = new DoctrineAdapter(new ORMPaginator($q));
-        $paginator = new Paginator($adapter);
-        $paginator->setDefaultItemCountPerPage(10);
-
-        $page = (int)$this->params()->fromQuery('page');
-        if($page) $paginator->setCurrentPageNumber($page);
-
         
         
         return new ViewModel(array(
@@ -182,6 +153,5 @@ class AlbumController extends AbstractActionController
             'album' => $this->getAlbumTable()->getAlbum($id)
         );
     }
-        
     
 }

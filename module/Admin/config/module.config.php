@@ -16,6 +16,7 @@ return array(
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
             'Admin\Controller\Album' => 'Admin\Controller\AlbumController',
+            'Admin\Controller\Test' => 'Admin\Controller\TestController',
         ),
     ),
 
@@ -24,7 +25,7 @@ return array(
             'admin' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/admin[/]',
+                    'route'    => '/admin[/:action][/]',
                     'defaults' => array(
                         'controller' => 'Admin\Controller\Index',
                         'action'     => 'index',
@@ -63,6 +64,21 @@ return array(
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller', 
                         'controller' => 'Album',
+                        'action'     => 'index',
+                    ),
+                ),
+            ), 
+            'test' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/admin/test/[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller', 
+                        'controller' => 'Test',
                         'action'     => 'index',
                     ),
                 ),
@@ -111,6 +127,10 @@ return array(
                     ),
                 )
             ),
+            'Test' => array(
+                'label' => 'Test',
+                'route' => 'test'
+            )
         ),
     ),
     
@@ -131,17 +151,18 @@ return array(
         )
     ),
 
-    
-    
+
     'view_manager' => array(
         'template_map' => array(
             'admin/layout'           => __DIR__ . '/../view/layout/cms.phtml',
+            'admin/404'               => __DIR__ . '/../view/admin/404.phtml',
+            'admin/index'             => __DIR__ . '/../view/admin/index.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
     ),
-
+    
 
 );
 
