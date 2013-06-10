@@ -56,7 +56,7 @@ return array(
             'album' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/admin/album/[/:action][/:id]',
+                    'route'    => '/admin/album[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
@@ -71,7 +71,7 @@ return array(
             'test' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/admin/test/[/:action][/:id]',
+                    'route'    => '/admin/test[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',

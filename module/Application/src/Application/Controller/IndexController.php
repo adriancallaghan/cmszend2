@@ -16,6 +16,22 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        return new ViewModel();
+        $testIds = array();
+        
+        $albums = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager')
+                ->getRepository('Application\Entity\Album')
+                ->findAll();
+
+        if (count($albums)>0){
+            foreach($albums AS $album){
+                $testIds[$album->id] = '';
+            }
+        } else {
+            $testIds = array_fill(1,11,'');
+        }
+          
+        return new ViewModel(array(
+            'test_ids' => array_keys($testIds),
+            ));
     }
 }

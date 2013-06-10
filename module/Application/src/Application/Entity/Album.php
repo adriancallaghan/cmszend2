@@ -12,6 +12,7 @@ use Zend\InputFilter\InputFilterInterface;
  * A music album.
  *
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks 
  * @ORM\Table(name="album")
  * @property string $artist
  * @property string $title
@@ -19,84 +20,108 @@ use Zend\InputFilter\InputFilterInterface;
  */
 class Album implements InputFilterAwareInterface 
 {
-    protected $inputFilter;
+    
+    use \Application\Traits\ReadOnly;
+    
+    
+    protected $_inputFilter;
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer");
+     * @ORM\Column(name="id",type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $_id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="artist",type="string")
      */
-    protected $artist;
+    protected $_artist;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="title",type="string")
      */
-    protected $title;
+    protected $_title;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created", type="datetime")
      */
-    public $created;
+    protected $_created;
         
     
-    /**
-     * Magic getter to expose protected properties.
-     *
-     * @param string $property
-     * @return mixed
-     */
-    public function __get($property) 
-    {
-        return $this->$property;
+    public function setId($id = 0){
+        $this->_id = $id;
+        return $this;
     }
-
-    /**
-     * Magic setter to save protected properties.
-     *
-     * @param string $property
-     * @param mixed $value
-     */
-    public function __set($property, $value) 
-    {
-        $this->$property = $value;
+    
+    public function getId(){
+        
+        if (!isset($this->_id)){
+            $this->setId();
+        }
+        return $this->_id;
     }
-
-    /**
-     * Convert the object to an array.
-     *
-     * @return array
-     */
-    public function getArrayCopy() 
-    {
-        return get_object_vars($this);
+    
+    public function setArtist($artist = 'Unknown'){
+        $this->_artist = $artist;
+        return $this;
     }
-
-    /**
-     * Populate from an array.
-     *
-     * @param array $data
-     */
-    public function populate($data = array()) 
-    {
-        $this->id     = (isset($data['id'])) ? $data['id'] : null;
-        $this->artist = (isset($data['artist'])) ? $data['artist'] : null;
-        $this->title  = (isset($data['title'])) ? $data['title'] : null;
-        $this->created  = (isset($data['created'])) ? $data['created'] : null;
+    
+    public function getArtist(){
+        
+        if (!isset($this->_artist)){
+            $this->setArtist();
+        }
+        return $this->_artist;
     }
-
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        throw new \Exception("Not used");
+    
+    public function setTitle($title = 'No Title'){
+        $this->_title = $title;
+        return $this;
     }
-
-    public function getInputFilter()
+    
+    public function getTitle(){
+        
+        if (!isset($this->_title)){
+            $this->setTitle();
+        }
+        return $this->_title;
+    }
+    
+    
+    public function setCreated($created = null){
+        
+        if ($created==null){
+            $created = new \DateTime("now");
+        }
+        $this->_created = $created;
+        return $this;
+    }
+    
+    public function getCreated(){
+                
+        if (!isset($this->_created)){
+            $this->setCreated();
+        }
+        return $this->_created->format('Y-m-d H:i');
+    }
+        
+    
+    
+    /** 
+    *  @ORM\PrePersist 
+    */
+    public function prePersist()
     {
-        if (!$this->inputFilter) {
+        $this->getCreated(); // makes sure we have a default time set
+    }
+    
+
+    public function setInputFilter(InputFilterInterface $inputFilter = null)
+    {
+        
+        if ($inputFilter==null){
+            
             $inputFilter = new InputFilter();
 
             $factory = new InputFactory();
@@ -146,10 +171,20 @@ class Album implements InputFilterAwareInterface
                     ),
                 ),
             )));
-
-            $this->inputFilter = $inputFilter;        
         }
+        
+        $this->_inputFilter = $inputFilter;
+        
+        return $this;
+    }
 
-        return $this->inputFilter;
+    public function getInputFilter()
+    {
+        
+        if (!isset($this->_inputFilter)) {
+            $this->setInputFilter();        
+        }
+        
+        return $this->_inputFilter;
     } 
 }
