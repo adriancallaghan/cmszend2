@@ -12,8 +12,6 @@ namespace Admin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;  
 use Application\Form\AlbumForm;       
-//use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-//use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DoctrineModule\Paginator\Adapter\Collection as Adapter;
 use Zend\Paginator\Paginator;
 use Doctrine\Common\Collections;

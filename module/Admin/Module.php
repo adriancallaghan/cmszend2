@@ -73,7 +73,7 @@ class Module
         
         // $loginRouteName is whitelisted from the redirection
         // The redirection is to the $loginRouteName 
-        // additional routes can be whitelisted
+        // additional routes can be whitelisted        
         if (!$e->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService')->hasIdentity()) {
                 
                 $whiteListed[] = $loginRouteName;

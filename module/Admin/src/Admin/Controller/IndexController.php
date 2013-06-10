@@ -37,13 +37,34 @@ class IndexController extends AbstractActionController
     
     public function loginAction(){
         
-
-        $form = new LoginForm();
+        //$debug = $e->getApplication()->getServiceManager()->get('doctrine.authenticationadapter.odm_default');
+        
+        $adapter = $this->getServiceLocator()->get('doctrine.authenticationadapter.odm_default');
+        //$adapter->setIdentityValue('$username');
+        //$adapter->setCredentialValue('$password');
+        $authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+        $result = $authService->authenticate($adapter);
+        
+        var_dump($result);
+        
+        
+        
+        
+        
+        $form = new LoginForm(); // part of the old sub system
+        return $form; // stop
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
         $request = $this->getRequest();
         if ($request->isPost()) {
             
 
             if ($form->setData($request->getPost())->isValid()) {
+                
+                
+
+                
+                
                 
                 $sm = $this->getServiceLocator();
                 $authService = $sm->get('Zend\Authentication\AuthenticationService');

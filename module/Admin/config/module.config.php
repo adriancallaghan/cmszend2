@@ -148,6 +148,15 @@ return array(
         ),
         'services' => array(
             'Zend\Authentication\AuthenticationService' => new Zend\Authentication\AuthenticationService(),
+            'authenticationadapter' => array(
+                'odm_default' => array(
+                    'objectManager' => 'doctrine.documentmanager.odm_default',
+                    'identityClass' => 'Application\Entity\User',
+                    'identityProperty' => 'username',
+                    'credentialProperty' => 'password',
+                    'credentialCallable' => 'Application\Entity\User::hashPassword'
+                ),
+            ),
         )
     ),
 
