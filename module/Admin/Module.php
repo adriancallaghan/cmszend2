@@ -9,27 +9,22 @@
 
 namespace Admin;
 
+
 use Zend\Loader;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
+use Zend\View\HelperPluginManager;
+use Zend\Permissions\Acl\Acl;
+use Zend\Permissions\Acl\Role\GenericRole;
+use Zend\Permissions\Acl\Resource\GenericResource;
+
 
 
 class Module
 {
 
-    /*public function getServiceConfig()
-    {
-        return array(
-            'factories' => array(
-                'Zend\Authentication\AuthenticationService' => function($serviceManager) {
-                    return $serviceManager->get('doctrine.authenticationservice.orm_default');
-
-                }
-            )
-        );
-    }*/
-    
+   
     
     
     public function getConfig()
@@ -37,19 +32,6 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
     
-    /*public function getAutoloaderConfig()
-    {
-        return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
-                __DIR__ . '/autoload_classmap.php',
-            ),
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
-    }*/
     public function getAutoloaderConfig()
     {
         return array(
@@ -61,6 +43,8 @@ class Module
         );
     }
 
+    
+    
     
     
     public function init(ModuleManager $mm)
@@ -82,7 +66,7 @@ class Module
         });
     }
     
-   
+  
     public function restrictAccess(MvcEvent $e, array $whiteListed = array(), $loginRouteName = 'admin/login'){
         
         // $loginRouteName is whitelisted from the redirection
@@ -116,6 +100,7 @@ class Module
         }
         
     }
+    
    
    
 }

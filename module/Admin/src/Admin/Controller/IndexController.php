@@ -11,8 +11,7 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController,
 Zend\View\Model\ViewModel,
-Admin\Form\LoginForm,
-Zend\Authentication\Adapter\DbTable as AuthAdapter;
+Admin\Form\LoginForm;
 
 class IndexController extends AbstractActionController
 {

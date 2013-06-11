@@ -1,14 +1,9 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+/*
+ * Module config for CMS
  */
 
-
-
+namespace Admin;
 
 return array(
 
@@ -22,21 +17,36 @@ return array(
 
     'router' => array(
         'routes' => array(
+
             'admin' => array(
-                'type'    => 'segment',
+                
+                'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/admin[/:action][/]',
+                    'route' => '/admin',
                     'defaults' => array(
-                        'controller' => 'Admin\Controller\Index',
-                        'action'     => 'index',
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller'    => 'Index',
+                        'action'        => 'index',
                     ),
                 ),
-                'may_terminate' => true,
+                'may_terminate' => true,                
+                
                 'child_routes' => array(
+                    
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:action][/][/:id][/]',
+                            /*'constraints' => array(
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),*/
+                        ),
+                    ),
+                    
                     'login' => array(
                         'type' => 'segment',
                         'options' => array(
-                            'route' => 'login',
+                            'route' => '/login',
                             'defaults' => array(
                                 'action' => 'login'
                             )
@@ -45,45 +55,46 @@ return array(
                     'logout' => array(
                         'type' => 'segment',
                         'options' => array(
-                            'route' => 'logout',
+                            'route' => '/logout',
                             'defaults' => array(
                                 'action' => 'logout'
                             )
                         )
-                    )
+                    ),
+                    'album' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/album[/:action][/:id][/]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'     => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Album',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ), 
+                    'test' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/test[/:action][/:id][/]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'     => '[0-9]+',
+                            ),
+                            'defaults' => array( 
+                                'controller' => 'Test',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),                    
                 ),
-            ),        
-            'album' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/admin/album[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Admin\Controller', 
-                        'controller' => 'Album',
-                        'action'     => 'index',
-                    ),
-                ),
-            ), 
-            'test' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/admin/test[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Admin\Controller', 
-                        'controller' => 'Test',
-                        'action'     => 'index',
-                    ),
-                ),
-            ), 
 
+                
+            ),
+            
+            
         ),
     ),   
     
@@ -108,7 +119,7 @@ return array(
             ),
             'Albums' => array(
                 'label' => 'Albums',
-                'route' => 'album',
+                'route' => 'admin/album',
                 'pages' => array(
                     array(
                         'label' => 'Add',
@@ -129,7 +140,7 @@ return array(
             ),
             'Test' => array(
                 'label' => 'Test',
-                'route' => 'test'
+                'route' => 'admin/test'
             )
         ),
     ),
@@ -137,48 +148,17 @@ return array(
     
     'service_manager' => array(
         
-        /*
-        'Admin\Authentication\Service' => function($sm) {
-            $authService = new \Zend\Authentication\AuthenticationService();
-            $authService->setStorage(new \Zend\Authentication\Storage\Session('user', 'details'));
-            return $authService;
-        },*/
         'factories' => array(
-            'admin_navigation' => 'Admin\Navigation\Service\AdminNavigationFactory',  
-            'Zend\Authentication\AuthenticationService' => function($serviceManager) {
-                return $serviceManager->get('doctrine.authenticationservice.orm_default');
-            }
+            'admin_navigation' => 'Admin\Navigation\Service\AdminNavigationFactory',            
         ),
         'services' => array(
-            //'Zend\Authentication\AuthenticationService' => new Zend\Authentication\AuthenticationService(),
-            /*'authenticationadapter' => array(
-                'odm_default' => array(
-                    'objectManager' => 'doctrine.documentmanager.odm_default',
-                    'identityClass' => 'Application\Entity\User',
-                    'identityProperty' => 'username',
-                    'credentialProperty' => 'password',
-                    //'credentialCallable' => 'Application\Entity\User::hashPassword'
-                ),
-            ),*/
         )
     ),
     
-    
-    
-    
-    'doctrine' => array(
-        'authentication' => array(
-            'orm_default' => array(
-                'object_manager' => 'Doctrine\ORM\EntityManager',
-                'identity_class' => 'Application\Entity\User',
-                'identity_property' => '_username',
-                'credential_property' => 'password',
-            ),
-        ),
-    ),
-
 
     'view_manager' => array(
+        //'not_found_template'       => 'admin/404',
+        //'exception_template'       => 'admin/index',
         'template_map' => array(
             'admin/layout'           => __DIR__ . '/../view/layout/cms.phtml',
             'admin/404'               => __DIR__ . '/../view/admin/404.phtml',

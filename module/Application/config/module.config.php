@@ -36,6 +36,9 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+            'Zend\Authentication\AuthenticationService' => function($serviceManager) {
+                return $serviceManager->get('doctrine.authenticationservice.orm_default');
+            }
         ),
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
@@ -92,7 +95,14 @@ return array(
                     __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
                 )
             )
-        )
-        
+        ),
+        'authentication' => array(
+            'orm_default' => array(
+                'object_manager' => 'Doctrine\ORM\EntityManager',
+                'identity_class' => 'Application\Entity\User',
+                'identity_property' => '_username',
+                'credential_property' => 'password',
+            ),
+        ),
     ),
 );
