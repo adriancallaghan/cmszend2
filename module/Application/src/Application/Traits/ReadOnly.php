@@ -21,7 +21,7 @@ trait Readonly{
             return $this;
         }
                 
-        throw new \Exception('Invalid '.__CLASS__.' property');
+        throw new \Exception('"'.$name.'" is an invalid property of '.__CLASS__.' assignment of "'.$value.'" failed!');
         
     }
 
@@ -33,7 +33,7 @@ trait Readonly{
             return $this->$method();
         }
         
-        throw new \Exception('Invalid '.__CLASS__.' property');
+        throw new \Exception('Invalid '.__CLASS__.' property '.$name);
     }
     
     public function setOptions(array $options)

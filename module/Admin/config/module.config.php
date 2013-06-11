@@ -144,20 +144,37 @@ return array(
             return $authService;
         },*/
         'factories' => array(
-            'admin_navigation' => 'Admin\Navigation\Service\AdminNavigationFactory',            
+            'admin_navigation' => 'Admin\Navigation\Service\AdminNavigationFactory',  
+            'Zend\Authentication\AuthenticationService' => function($serviceManager) {
+                return $serviceManager->get('doctrine.authenticationservice.orm_default');
+            }
         ),
         'services' => array(
-            'Zend\Authentication\AuthenticationService' => new Zend\Authentication\AuthenticationService(),
-            'authenticationadapter' => array(
+            //'Zend\Authentication\AuthenticationService' => new Zend\Authentication\AuthenticationService(),
+            /*'authenticationadapter' => array(
                 'odm_default' => array(
                     'objectManager' => 'doctrine.documentmanager.odm_default',
                     'identityClass' => 'Application\Entity\User',
                     'identityProperty' => 'username',
                     'credentialProperty' => 'password',
-                    'credentialCallable' => 'Application\Entity\User::hashPassword'
+                    //'credentialCallable' => 'Application\Entity\User::hashPassword'
                 ),
-            ),
+            ),*/
         )
+    ),
+    
+    
+    
+    
+    'doctrine' => array(
+        'authentication' => array(
+            'orm_default' => array(
+                'object_manager' => 'Doctrine\ORM\EntityManager',
+                'identity_class' => 'Application\Entity\User',
+                'identity_property' => '_username',
+                'credential_property' => 'password',
+            ),
+        ),
     ),
 
 

@@ -9,13 +9,13 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface; 
 
 /**
- * A music album.
+ * A CMS user.
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks 
- * @ORM\Table(name="album")
- * @property string $artist
- * @property string $title
+ * @ORM\Table(name="cms_user")
+ * @property string $username
+ * @property string $password
  * @property int $id
  */
 class User //implements InputFilterAwareInterface 
@@ -34,14 +34,14 @@ class User //implements InputFilterAwareInterface
     protected $_id;
 
     /**
-     * @ORM\Column(name="artist",type="string")
+     * @ORM\Column(name="username",type="string")
      */
-    protected $_artist;
+    protected $_username;
 
     /**
-     * @ORM\Column(name="title",type="string")
+     * @ORM\Column(name="password",type="string")
      */
-    protected $_title;
+    protected $_password;
 
     /**
      * @ORM\Column(name="created", type="datetime")
@@ -62,30 +62,30 @@ class User //implements InputFilterAwareInterface
         return $this->_id;
     }
     
-    public function setArtist($artist = 'Unknown'){
-        $this->_artist = $artist;
+    public function setUsername($username = 'Unknown'){
+        $this->_username = $username;
         return $this;
     }
     
-    public function getArtist(){
+    public function getUsername(){
         
-        if (!isset($this->_artist)){
-            $this->setArtist();
+        if (!isset($this->_username)){
+            $this->setUsername();
         }
-        return $this->_artist;
+        return $this->_username;
     }
     
-    public function setTitle($title = 'No Title'){
-        $this->_title = $title;
+    public function setPassword($password = 'No Password'){
+        $this->_password = $password;
         return $this;
     }
     
-    public function getTitle(){
+    public function getPassword(){
         
-        if (!isset($this->_title)){
-            $this->setTitle();
+        if (!isset($this->_password)){
+            $this->setPassword();
         }
-        return $this->_title;
+        return $this->_password;
     }
     
     

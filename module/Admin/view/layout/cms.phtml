@@ -41,7 +41,7 @@
                         ?>               
                         <div class="btn-group pull-right">
                             <a class="btn dropdown-toggle btn-inverse user-indentity" data-toggle="dropdown" href="#">
-                                <i class="icon-user icon-white"></i>&nbsp;<?php echo $this->identity(); ?>&nbsp;<span class="caret"></span>
+                                <i class="icon-user icon-white"></i>&nbsp;<?php echo $this->escapeHtml($this->identity()->getUsername()); ?>&nbsp;<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">  
                                 <li><a href="<?php echo $this->url('admin/logout', array()); ?>"><i class="icon-user"></i> Change Password</a></li>

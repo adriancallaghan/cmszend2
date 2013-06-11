@@ -46,4 +46,9 @@ Update DB (Caution it flushes the db)
 ./vendor/bin/doctrine-module orm:schema-tool:update --force
 
 
+Admin
+-----
+You need to add a username and (md5) password combination into the cms_user table in order to be able to login to the cms
+
+
 
