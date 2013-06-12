@@ -3,10 +3,6 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface; 
 
 /**
  * A CMS user.
@@ -18,7 +14,7 @@ use Zend\InputFilter\InputFilterInterface;
  * @property string $password
  * @property int $id
  */
-class User //implements InputFilterAwareInterface 
+class User 
 {
     
     use \Application\Traits\ReadOnly;
@@ -105,8 +101,7 @@ class User //implements InputFilterAwareInterface
         }
         return $this->_created->format('Y-m-d H:i');
     }
-        
-    
+
     
     /** 
     *  @ORM\PrePersist 
@@ -115,76 +110,5 @@ class User //implements InputFilterAwareInterface
     {
         $this->getCreated(); // makes sure we have a default time set
     }
-    
-/*
-    public function setInputFilter(InputFilterInterface $inputFilter = null)
-    {
-        
-        if ($inputFilter==null){
-            
-            $inputFilter = new InputFilter();
 
-            $factory = new InputFactory();
-
-            $inputFilter->add($factory->createInput(array(
-                'name'       => 'id',
-                'required'   => true,
-                'filters' => array(
-                    array('name'    => 'Int'),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'artist',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'title',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            )));
-        }
-        
-        $this->_inputFilter = $inputFilter;
-        
-        return $this;
-    }
-
-    public function getInputFilter()
-    {
-        
-        if (!isset($this->_inputFilter)) {
-            $this->setInputFilter();        
-        }
-        
-        return $this->_inputFilter;
-    } */
 }
