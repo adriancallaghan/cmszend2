@@ -3,6 +3,7 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilterAwareInterface;
@@ -16,6 +17,7 @@ use Zend\InputFilter\InputFilterInterface;
  * @ORM\Table(name="album")
  * @property string $artist
  * @property string $title
+ * @property string $comments
  * @property int $id
  */
 class Album implements InputFilterAwareInterface 
@@ -24,68 +26,83 @@ class Album implements InputFilterAwareInterface
     use \Application\Traits\ReadOnly;
     
     
-    protected $_inputFilter;
+    protected $inputFilter;
 
     /**
      * @ORM\Id
      * @ORM\Column(name="id",type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $_id;
+    protected $id;
 
     /**
      * @ORM\Column(name="artist",type="string")
      */
-    protected $_artist;
+    protected $artist;
 
     /**
      * @ORM\Column(name="title",type="string")
      */
-    protected $_title;
+    protected $title;
 
     /**
      * @ORM\Column(name="created", type="datetime")
      */
-    protected $_created;
+    protected $created;
         
+    /** 
+     * @param \Doctring\Common\Collections\ArrayCollection $property
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="album", cascade={"persist", "remove"}) 
+     */    
+    protected $comments;
+    
+ 
+    public function __construct(array $options = null) {
+        
+        $this->setComments(new \Doctrine\Common\Collections\ArrayCollection());
+        
+        return parent::__construct($options);
+    }
+
+
     
     public function setId($id = 0){
-        $this->_id = $id;
+        $this->id = $id;
         return $this;
     }
     
     public function getId(){
         
-        if (!isset($this->_id)){
+        if (!isset($this->id)){
             $this->setId();
         }
-        return $this->_id;
+        return $this->id;
     }
     
     public function setArtist($artist = 'Unknown'){
-        $this->_artist = $artist;
+        $this->artist = $artist;
         return $this;
     }
     
     public function getArtist(){
         
-        if (!isset($this->_artist)){
+        if (!isset($this->artist)){
             $this->setArtist();
         }
-        return $this->_artist;
+        return $this->artist;
     }
     
     public function setTitle($title = 'No Title'){
-        $this->_title = $title;
+        $this->title = $title;
         return $this;
     }
     
     public function getTitle(){
         
-        if (!isset($this->_title)){
+        if (!isset($this->title)){
             $this->setTitle();
         }
-        return $this->_title;
+        return $this->title;
     }
     
     
@@ -94,18 +111,57 @@ class Album implements InputFilterAwareInterface
         if ($created==null){
             $created = new \DateTime("now");
         }
-        $this->_created = $created;
+        $this->created = $created;
         return $this;
     }
     
     public function getCreated(){
                 
-        if (!isset($this->_created)){
+        if (!isset($this->created)){
             $this->setCreated();
         }
-        return $this->_created->format('Y-m-d H:i');
+        return $this->created->format('Y-m-d H:i');
     }
         
+    
+    public function setComments($comments){
+        $this->comments = $comments;
+        return $this;
+    }
+    
+    public function getComments(){
+        
+        if (!isset($this->comments)){
+            $this->setComments();
+        }
+        return $this->comments;
+    }
+     
+    public function removeComment(Comment $comment) {
+        
+        throw new \Exception('Not implemented');
+        /*
+         * $comment->setAlbum($this);
+        $comments = $this->getComments();        
+        $comments[] = $comment;
+        $this->setComments($comment);
+         */
+        
+        
+        $this->comments->removeElement($comment);
+        
+        $comment->unsetAlbum();
+    }
+ 
+    public function addComment(Comment $comment) {
+        $comment->setAlbum($this);
+        $comments = $this->getComments();        
+        $comments[] = $comment;
+        $this->setComments($comments);
+        //var_dump(current($this->getComments()->toArray())->message);
+        //die;
+        return $this;
+    }
     
     
     /** 
@@ -173,7 +229,7 @@ class Album implements InputFilterAwareInterface
             )));
         }
         
-        $this->_inputFilter = $inputFilter;
+        $this->inputFilter = $inputFilter;
         
         return $this;
     }
@@ -181,10 +237,10 @@ class Album implements InputFilterAwareInterface
     public function getInputFilter()
     {
         
-        if (!isset($this->_inputFilter)) {
+        if (!isset($this->inputFilter)) {
             $this->setInputFilter();        
         }
         
-        return $this->_inputFilter;
+        return $this->inputFilter;
     } 
 }

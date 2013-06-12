@@ -48,7 +48,8 @@ Update DB (Caution it flushes the db)
 
 Admin
 -----
-You need to add a username and (md5) password combination into the cms_user table in order to be able to login to the cms
+You need to add a username and (md5) password combination into the cmsuser table in order to be able to login to the cms.
+The password can be easily md5'd on the cmd line with something like php -r 'echo md5("SOME PASS");'
 
 
 

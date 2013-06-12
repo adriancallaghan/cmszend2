@@ -37,7 +37,7 @@ class RestController extends AbstractRestfulController
         
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');        
 
-        $album = $em->getRepository('Application\Entity\Album')->findOneBy(array('_id'=>$id));
+        $album = $em->getRepository('Application\Entity\Album')->findOneBy(array('id'=>$id));
 
         return new JsonModel(array(
             'data' => !is_null($album) ? $album->toArray() : null,

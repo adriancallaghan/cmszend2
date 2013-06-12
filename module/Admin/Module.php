@@ -14,10 +14,6 @@ use Zend\Loader;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
-use Zend\View\HelperPluginManager;
-use Zend\Permissions\Acl\Acl;
-use Zend\Permissions\Acl\Role\GenericRole;
-use Zend\Permissions\Acl\Resource\GenericResource;
 
 
 

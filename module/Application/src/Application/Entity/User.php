@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks 
- * @ORM\Table(name="cms_user")
+ * @ORM\Table(name="cmsuser")
  * @property string $username
  * @property string $password
  * @property int $id
@@ -20,68 +20,68 @@ class User
     use \Application\Traits\ReadOnly;
     
     
-    protected $_inputFilter;
+    protected $inputFilter;
 
     /**
      * @ORM\Id
      * @ORM\Column(name="id",type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $_id;
+    protected $id;
 
     /**
      * @ORM\Column(name="username",type="string")
      */
-    protected $_username;
+    protected $username;
 
     /**
      * @ORM\Column(name="password",type="string")
      */
-    protected $_password;
+    protected $password;
 
     /**
      * @ORM\Column(name="created", type="datetime")
      */
-    protected $_created;
+    protected $created;
         
     
     public function setId($id = 0){
-        $this->_id = $id;
+        $this->id = $id;
         return $this;
     }
     
     public function getId(){
         
-        if (!isset($this->_id)){
+        if (!isset($this->id)){
             $this->setId();
         }
-        return $this->_id;
+        return $this->id;
     }
     
     public function setUsername($username = 'Unknown'){
-        $this->_username = $username;
+        $this->username = $username;
         return $this;
     }
     
     public function getUsername(){
         
-        if (!isset($this->_username)){
+        if (!isset($this->username)){
             $this->setUsername();
         }
-        return $this->_username;
+        return $this->username;
     }
     
     public function setPassword($password = 'No Password'){
-        $this->_password = $password;
+        $this->password = $password;
         return $this;
     }
     
     public function getPassword(){
         
-        if (!isset($this->_password)){
+        if (!isset($this->password)){
             $this->setPassword();
         }
-        return $this->_password;
+        return $this->password;
     }
     
     
@@ -90,16 +90,16 @@ class User
         if ($created==null){
             $created = new \DateTime("now");
         }
-        $this->_created = $created;
+        $this->created = $created;
         return $this;
     }
     
     public function getCreated(){
                 
-        if (!isset($this->_created)){
+        if (!isset($this->created)){
             $this->setCreated();
         }
-        return $this->_created->format('Y-m-d H:i');
+        return $this->created->format('Y-m-d H:i');
     }
 
     

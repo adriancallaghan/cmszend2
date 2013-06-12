@@ -100,7 +100,7 @@ return array(
             'orm_default' => array(
                 'object_manager' => 'Doctrine\ORM\EntityManager',
                 'identity_class' => 'Application\Entity\User',
-                'identity_property' => '_username',
+                'identity_property' => 'username',
                 'credential_property' => 'password',
             ),
         ),

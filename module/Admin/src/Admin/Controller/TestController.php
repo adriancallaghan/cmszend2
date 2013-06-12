@@ -42,14 +42,37 @@ class TestController extends AbstractActionController
     public function indexAction()
     {
 
-        $debug = null;
         
-        $debug = $this->getEntityManager()->getRepository('Application\Entity\Album')->findAll();
+        $debug = new \stdClass();
         
         
+        //$debug = $this->getEntityManager()->getRepository('Application\Entity\Album')->findAll();
+        $em = $this->getEntityManager();
+        
+        $commentDao = $em->getRepository('Application\Entity\Comment');
+        $comment = $commentDao->find(15);
+        $debug->commentToAlbumTitle = $comment->getAlbum()->title;
+        
+        
+        $albumDao = $em->getRepository('Application\Entity\Album');
+        $album = $albumDao->find(6);
+        $debug->albumToCommentMessage = $album->getComments()->toArray();
+        
+
+        $newComment = new \Application\Entity\Comment();
+        $newComment->setMessage('A Message')
+                ->setAuthor('Author')
+                ->setEmail('email@email.co.uk');
+
+        $album->addComment($newComment);
+        
+
+        $em->persist($newComment);
+        $em->persist($album);
+        $em->flush(); 
         
         return new ViewModel(array(
-            'debug'     => $debug
+            'debug'     => isset($debug) ? $debug : null
         ));
 
     }

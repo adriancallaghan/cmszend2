@@ -9,90 +9,149 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface; 
 
 /**
- * A Publisher associated with an Album.
+ * A Comment associated with an Album.
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks 
- * @ORM\Table(name="publisher")
- * @property string $name
- * @property string $established
+ * @ORM\Table(name="comments")
+ * @property string $message
+ * @property string $author
+ * @property string $email 
+ * @property string $dated
  * @property int $id
  */
-class Publisher //implements InputFilterAwareInterface 
+class Comment //implements InputFilterAwareInterface 
 {
     
     use \Application\Traits\ReadOnly;
     
     
-    protected $_inputFilter;
+    protected $inputFilter;
 
     /**
      * @ORM\Id
      * @ORM\Column(name="id",type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $_id;
+    protected $id;
+
+    
+    /** 
+     * @ORM\ManyToOne(targetEntity="Album", inversedBy="comment")
+     */
+    protected $album;
+    
+    
+    /**
+     * @ORM\Column(name="message",type="string")
+     */
+    protected $message;
 
     /**
-     * @ORM\Column(name="name",type="string")
+     * @ORM\Column(name="author",type="string")
      */
-    protected $_name;
-
+    protected $author;
+    
     /**
-     * @ORM\Column(name="established", type="datetime")
+     * @ORM\Column(name="email",type="string")
      */
-    protected $_established;
+    protected $email;
+    
+    /**
+     * @ORM\Column(name="dated", type="datetime")
+     */
+    protected $dated;
         
     
     public function setId($id = 0){
-        $this->_id = $id;
+        $this->id = $id;
         return $this;
     }
     
     public function getId(){
         
-        if (!isset($this->_id)){
+        if (!isset($this->id)){
             $this->setId();
         }
-        return $this->_id;
+        return $this->id;
     }
     
-    public function setName($name = 'Unknown'){
-        $this->_name = $name;
+    public function setMessage($message = ''){
+        $this->message = $message;
         return $this;
     }
     
-    public function getName(){
+    public function getMessage(){
         
-        if (!isset($this->_name)){
-            $this->setName();
+        if (!isset($this->message)){
+            $this->setMessage();
         }
-        return $this->_name;
+        return $this->message;
     }        
     
-    public function setEstablished($established = null){
-        
-        if ($established==null){
-            $established = new \DateTime("now");
-        }
-        $this->_established = $established;
+    public function setAuthor($author = 'Anonymous'){
+        $this->author = $author;
         return $this;
     }
     
-    public function getEstablished(){
-                
-        if (!isset($this->_established)){
-            $this->setEstablished();
+    public function getAuthor(){
+        
+        if (!isset($this->author)){
+            $this->setAuthor();
         }
-        return $this->_established->format('Y-m-d H:i');
+        return $this->author;
+    }  
+    
+    public function setEmail($email = 'Not provided'){
+        $this->email = $email;
+        return $this;
+    }
+    
+    public function getEmail(){
+        
+        if (!isset($this->email)){
+            $this->setEmail();
+        }
+        return $this->email;
+    }  
+    
+    public function setDated($dated = null){
+        
+        if ($dated==null){
+            $dated = new \DateTime("now");
+        }
+        $this->dated = $dated;
+        return $this;
+    }
+    
+    public function getDated(){
+                
+        if (!isset($this->dated)){
+            $this->setDated();
+        }
+        return $this->dated->format('Y-m-d H:i');
     }
 
+    public function setAlbum(Album $album = null){
+        $this->album = $album;
+        return $this;
+    }
+    
+    public function getAlbum(){
+        
+        if (!isset($this->album)){
+            $this->setAlbum();
+        }
+        return $this->album;
+    }
+    
+    
     /** 
     *  @ORM\PrePersist 
     */
     public function prePersist()
     {
-        $this->getEstablished(); // makes sure we have a default time set
+        $this->getDated(); // makes sure we have a default time set
     }
     
 /*
@@ -152,7 +211,7 @@ class Publisher //implements InputFilterAwareInterface
             )));
         }
         
-        $this->_inputFilter = $inputFilter;
+        $this->inputFilter = $inputFilter;
         
         return $this;
     }
@@ -160,10 +219,10 @@ class Publisher //implements InputFilterAwareInterface
     public function getInputFilter()
     {
         
-        if (!isset($this->_inputFilter)) {
+        if (!isset($this->inputFilter)) {
             $this->setInputFilter();        
         }
         
-        return $this->_inputFilter;
+        return $this->inputFilter;
     } */
 }

@@ -43,7 +43,6 @@ class AlbumController extends AbstractActionController
                 )
                 ->setItemCountPerPage(6);
 
-
         
         return new ViewModel(array(
             'paginator' => $paginator,

@@ -31,11 +31,12 @@
 </div>
 	
 
-<table class="table table-striped">
+<table class="table table-striped table-hover">
     <tr>
         <th>Title</th>
         <th>Artist</th>
         <th>Created</th>
+        <th>Comments</th>
         <th>&nbsp;</th>
     </tr>
     <?php foreach ($this->paginator as $album) : ?>
@@ -44,7 +45,15 @@
             <td><?php echo $this->escapeHtml($album->artist);?></td>
             <td><?php echo $this->escapeHtml($album->created);?></td>
             <td>
-                <pre><?php //print_r($album->toArray()); ?>(huge)</pre>
+                <?php
+                if ($comments = $album->getComments()) {
+                    foreach($comments AS $comment){
+                        echo "<p><strong>{$comment->message}</strong> <small>by {$comment->author} ({$comment->email}) <em>{$comment->dated}</em></small></p>";
+                    }
+                }
+                ?>
+            </td>
+            <td>
                 <div class="btn-group pull-right">
                     <a href="<?php echo $this->url('admin/album',array('action'=>'edit', 'id' => $album->id));?>" class="btn"><i class="icon-pencil"></i></a>
                     <a href="<?php echo $this->url('admin/album',array('action'=>'delete', 'id' => $album->id));?>" class="btn"><i class="icon-trash"></i></a> 
