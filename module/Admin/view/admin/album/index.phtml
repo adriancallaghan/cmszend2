@@ -47,14 +47,25 @@
             <td>
                 <?php
                 if ($comments = $album->getComments()) {
-                    foreach($comments AS $comment){
-                        echo "<p><strong>{$comment->message}</strong> <small>by {$comment->author} ({$comment->email}) <em>{$comment->dated}</em></small></p>";
-                    }
-                }
+                    foreach($comments AS $comment) : ?>
+                        <p>
+                            <div class="btn-group pull-right">                                
+                                <a href="<?php echo $this->url('admin/comment',array('action'=>'edit', 'id' => $comment->id));?>" class="btn btn-mini">
+                                    <i class="icon-pencil"></i>
+                                </a>
+                                <a href="<?php echo $this->url('admin/comment',array('action'=>'delete', 'id' => $comment->id));?>" class="btn btn-mini">
+                                    <i class="icon-trash"></i>
+                                </a>
+                            </div>
+                            <strong><?php echo $comment->message; ?></strong> <small>by <?php echo $comment->author; ?> (<?php echo $comment->email; ?>) <em><?php echo $comment->dated; ?></em></small>
+                        </p>
+                    <?php     
+                    endforeach;                 }
                 ?>
             </td>
             <td>
                 <div class="btn-group pull-right">
+                    <a href="<?php echo $this->url('admin/comment',array('action'=>'add', 'id' => $album->id));?>" class="btn"><i class="icon-comment"></i></a>
                     <a href="<?php echo $this->url('admin/album',array('action'=>'edit', 'id' => $album->id));?>" class="btn"><i class="icon-pencil"></i></a>
                     <a href="<?php echo $this->url('admin/album',array('action'=>'delete', 'id' => $album->id));?>" class="btn"><i class="icon-trash"></i></a> 
                 </div>

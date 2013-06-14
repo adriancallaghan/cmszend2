@@ -56,15 +56,13 @@ class Album implements InputFilterAwareInterface
      */    
     protected $comments;
     
- 
+ /*
     public function __construct(array $options = null) {
         
         $this->setComments(new \Doctrine\Common\Collections\ArrayCollection());
         
         return parent::__construct($options);
-    }
-
-
+    }*/
     
     public function setId($id = 0){
         $this->id = $id;
@@ -131,7 +129,7 @@ class Album implements InputFilterAwareInterface
     
     public function getComments(){
         
-        if (!isset($this->comments)){
+        if (!isset($this->comments)){            
             $this->setComments();
         }
         return $this->comments;
@@ -158,8 +156,6 @@ class Album implements InputFilterAwareInterface
         $comments = $this->getComments();        
         $comments[] = $comment;
         $this->setComments($comments);
-        //var_dump(current($this->getComments()->toArray())->message);
-        //die;
         return $this;
     }
     

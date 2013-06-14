@@ -146,6 +146,7 @@ class Comment //implements InputFilterAwareInterface
     }
     
     
+    
     /** 
     *  @ORM\PrePersist 
     */
@@ -154,7 +155,7 @@ class Comment //implements InputFilterAwareInterface
         $this->getDated(); // makes sure we have a default time set
     }
     
-/*
+
     public function setInputFilter(InputFilterInterface $inputFilter = null)
     {
         
@@ -173,7 +174,7 @@ class Comment //implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'artist',
+                'name'     => 'message',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
@@ -192,8 +193,27 @@ class Comment //implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'title',
+                'name'     => 'author',
                 'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 100,
+                        ),
+                    ),
+                ),
+            )));
+            
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'email',
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
@@ -224,5 +244,5 @@ class Comment //implements InputFilterAwareInterface
         }
         
         return $this->inputFilter;
-    } */
+    } 
 }

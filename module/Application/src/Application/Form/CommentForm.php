@@ -6,7 +6,7 @@ use Zend\Form\Form;
 
 
 
-class AlbumForm extends Form
+class CommentForm extends Form
 {
     public function __construct($name = null)
     {
@@ -20,21 +20,30 @@ class AlbumForm extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'title',
+            'name' => 'message',
             'attributes' => array(
                 'type'  => 'text',
             ),
             'options' => array(
-                'label' => 'Title',
+                'label' => 'Message',
             ),
         ));
         $this->add(array(
-            'name' => 'artist',
+            'name' => 'author',
             'attributes' => array(
                 'type'  => 'text',
             ),
             'options' => array(
-                'label' => 'Artist',
+                'label' => 'Author',
+            ),
+        ));
+        $this->add(array(
+            'name' => 'email',
+            'attributes' => array(
+                'type'  => 'text',
+            ),
+            'options' => array(
+                'label' => 'Email',
             ),
         ));
         $this->add(array(

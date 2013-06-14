@@ -11,6 +11,7 @@ return array(
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
             'Admin\Controller\Album' => 'Admin\Controller\AlbumController',
+            'Admin\Controller\Comment' => 'Admin\Controller\CommentController',
             'Admin\Controller\Test' => 'Admin\Controller\TestController',
         ),
     ),
@@ -75,6 +76,20 @@ return array(
                             ),
                         ),
                     ), 
+                    'comment' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/comment[/:action][/:id][/]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'     => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Comment',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ), 
                     'test' => array(
                         'type'    => 'segment',
                         'options' => array(
@@ -134,6 +149,27 @@ return array(
                     array(
                         'label' => 'Delete',
                         'route' => 'album',
+                        'action' => 'delete',
+                    ),
+                )
+            ),
+            'Comments' => array(
+                'label' => 'Comments',
+                'route' => 'admin/comment',
+                'pages' => array(
+                    array(
+                        'label' => 'Add',
+                        'route' => 'comment',
+                        'action' => 'add',
+                    ),
+                    array(
+                        'label' => 'Edit',
+                        'route' => 'comment',
+                        'action' => 'edit',
+                    ),
+                    array(
+                        'label' => 'Delete',
+                        'route' => 'comment',
                         'action' => 'delete',
                     ),
                 )

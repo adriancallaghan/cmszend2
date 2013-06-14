@@ -1,0 +1,35 @@
+<?php
+
+$title = 'Add';
+$this->headTitle($title);
+
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+
+$form = $this->form;
+$form->setAttribute('action', $this->url('admin/comment', array('action' => 'add','controller'=>'admin')));
+$form->prepare();
+
+echo $this->formTwb($form, \DluTwBootstrap\Form\FormUtil::FORM_TYPE_VERTICAL);
+
+/*
+echo $this->form()->openTag($form);
+echo $this->formHidden($form->get('id'));
+echo $this->formRow($form->get('title'));
+echo $this->formRow($form->get('artist'));
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
+
+/*
+ * 
+ * Alternatively, the process of rendering the form can be simplified by using the bundled formCollection view helper. 
+ * For example, in the view script above replace all the form-rendering echo statements with:
+ * 
+ * echo $this->formCollection($form);
+ * 
+ * This will iterate over the form structure, calling the appropriate label, element and error view helpers for each element, 
+ * but you still have to wrap formCollection($form) with the open and close form tags. 
+ * This helps reduce the complexity of your view script in situations where the default HTML rendering of the form is acceptable.
+
+ */

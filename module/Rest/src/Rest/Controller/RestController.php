@@ -3,7 +3,6 @@ namespace Rest\Controller;
 
 use Zend\Mvc\Controller\AbstractRestfulController;
 
-
 use Application\Form\AlbumForm;
 use Zend\View\Model\JsonModel;
 
@@ -18,16 +17,25 @@ class RestController extends AbstractRestfulController
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $albumRepo = $em->getRepository('\Application\Entity\Album');
         $albums = $albumRepo->findAll();
-        $notLazy = array();
-
-        if (count($albums)>0){
-            foreach($albums AS $album){
-                $notLazy[] = $album->toArray();
-            }
-        }
         
+        $collection = new \Doctrine\Common\Collections\ArrayCollection($albums);
+        
+        $data = $collection->map(function($a){            
+            
+            // if this is a comment, map each element as an array, and the container as an array
+            $a->comments = $a->comments->map(
+                function($p){
+                    return $p->toArray();
+                })->toArray();
+                
+            // map each of the elements within the collection as an array
+            return $a->toArray();
+            
+        })->toArray(); // result will stil be an array collection, that needs to be cast to an array
+
+ 
         return new JsonModel(array(
-            'data' => $notLazy,
+            'data' => $data,
         ));
 
     }
