@@ -62,6 +62,7 @@ class CommentController extends AbstractActionController
         $albumDao = $em->getRepository('Application\Entity\Album');
         $album = $albumDao->find($albumId);
 
+        /*
         YOU ARE HERE!!
         
         ABOUT TO ADD DETECTION FOR WHICH ALBUM you are adding a comment to (this should be a drop down)
@@ -73,7 +74,7 @@ class CommentController extends AbstractActionController
             ON SUBMISSION THIS ID WOULD BE USED AGAINST THE \Application\Entity\Album::
                 
                 CURRENTLY THE ID IS NOT BEING SUBMITTED AT ALL
-            
+            */
             
         $comment = new \Application\Entity\Comment();
         $form = new CommentForm();      

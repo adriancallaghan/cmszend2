@@ -18,6 +18,8 @@ INITIAL SETUP
 cd ../NAMEOFNEWPROJECT
 git clone https://github.com/adriancallaghan/cmszend2.git NAMEOFNEWPROJECT  (will clone the project into the new project)
 cd NAMEOFNEWPROJECT
+mv config/autoload/examplelocal.php config/autoload/local.php
+nano config/autoload/local.php (set database credientials)
 php composer.phar self-update
 php composer.phar install
 ./vendor/bin/doctrine-module orm:schema-tool:create
