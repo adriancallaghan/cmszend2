@@ -4,45 +4,35 @@ Introduction
 Based on ZF2 Skeleton, this Skeleton has Pagination, Dual Navigation, Zend Auth, Doctrine2, Flash Messages, REST, Dynamic Modules/layouts, and a secure CMS
 
 
-QUICK START
------------
-git clone https://github.com/adriancallaghan/cmszend2.git
+
+HOSTING STRUCTURE
+-----------------
+Folder structure is /NAMEOFNEWPROJECT/public/ 
+Public is the Document-root for the server.
+Public should not be present prior to cloning from GIT, but setup in the host file
+
+
+
+INITIAL SETUP
+-------------
+cd ../NAMEOFNEWPROJECT
+git clone https://github.com/adriancallaghan/cmszend2.git NAMEOFNEWPROJECT  (will clone the project into the new project)
+cd NAMEOFNEWPROJECT
 php composer.phar self-update
 php composer.phar install
 ./vendor/bin/doctrine-module orm:schema-tool:create
 
 
 
-
-Installation of code dependancies using composer and git
---------------------------------------------------------
-git clone
-php composer.phar self-update
-php composer.phar install
-
-
-
-Installation DB
----------------
-./vendor/bin/doctrine-module orm:schema-tool:create 
-
-
-
-
-Updates of code dependancies using composer and git
----------------------------------------------------
+UPDATE USING GIT/COMPOSER & DOCTRINE2
+-------------------------------------
 git pull
 php composer.phar install
-
-
-
-Check DB version
-----------------
 ./vendor/bin/doctrine-module orm:schema-tool:create./vendor/bin/doctrine-module orm:validate-schema
 
 
-Update DB (Caution it flushes the db)
--------------------------------------
+UPDATE DB IF NECESSARY (Caution it can cause the db to flush)
+-------------------------------------------------------------
 ./vendor/bin/doctrine-module orm:schema-tool:update --force
 
 
