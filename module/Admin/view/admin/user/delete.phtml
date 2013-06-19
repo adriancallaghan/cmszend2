@@ -1,5 +1,5 @@
 <?php
-$title = 'Delete album';
+$title = 'Delete user';
 $this->headTitle($title);
 ?>
 
@@ -8,19 +8,18 @@ $this->headTitle($title);
     <div class="span10 container well well-large">
         <h4><?php echo $this->escapeHtml($title); ?></h4>
         <h5>
-            Are you sure that you want to delete
-            '<?php echo $this->escapeHtml($album->title); ?>' by
-            '<?php echo $this->escapeHtml($album->artist); ?>'?
+            Are you sure that you want to delete 
+            '<?php echo $this->escapeHtml($user->firstname); ?> <?php echo $this->escapeHtml($user->lastname); ?>'?
         </h5>
 
         <?php
-        $url = $this->url('admin/album', array(
+        $url = $this->url('admin/user', array(
             'action' => 'delete',
             'id'     => $this->id,
         ));
         ?>
         <form action="<?php echo $url; ?>" method="post">
-            <input type="hidden" name="id" value="<?php echo (int) $album->id; ?>" />
+            <input type="hidden" name="id" value="<?php echo (int) $user->id; ?>" />
             <input type="submit" name="del" value="Yes" class="btn btn-large btn-success" />
             <input type="submit" name="del" value="No" class="btn btn-large btn-danger" />
         </form>

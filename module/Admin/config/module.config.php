@@ -9,10 +9,9 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-            'Admin\Controller\Index' => 'Admin\Controller\IndexController',
+            'Admin\Controller\User' => 'Admin\Controller\UserController',
             'Admin\Controller\Album' => 'Admin\Controller\AlbumController',
             'Admin\Controller\Comment' => 'Admin\Controller\CommentController',
-            'Admin\Controller\Test' => 'Admin\Controller\TestController',
         ),
     ),
 
@@ -26,8 +25,8 @@ return array(
                     'route' => '/admin',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'index',
+                        'controller'    => 'User', // should be set to a suitable controller
+                        'action'        => 'home',
                     ),
                 ),
                 'may_terminate' => true,                
@@ -42,13 +41,28 @@ return array(
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),*/
                         ),
-                    ),
-                    
+                    ), 
+                        
+                    'user' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/user[/:action][/:id][/]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'     => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'User',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),                         
                     'login' => array(
                         'type' => 'segment',
                         'options' => array(
-                            'route' => '/login',
+                            'route' => 'login',
                             'defaults' => array(
+                                'controller'    => 'User',
                                 'action' => 'login'
                             )
                         )
@@ -56,12 +70,14 @@ return array(
                     'logout' => array(
                         'type' => 'segment',
                         'options' => array(
-                            'route' => '/logout',
+                            'route' => 'logout',
                             'defaults' => array(
+                                'controller'    => 'User',
                                 'action' => 'logout'
                             )
                         )
                     ),
+                    
                     'album' => array(
                         'type'    => 'segment',
                         'options' => array(
@@ -89,21 +105,7 @@ return array(
                                 'action'     => 'index',
                             ),
                         ),
-                    ), 
-                    'test' => array(
-                        'type'    => 'segment',
-                        'options' => array(
-                            'route'    => '/test[/:action][/:id][/]',
-                            'constraints' => array(
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'id'     => '[0-9]+',
-                            ),
-                            'defaults' => array( 
-                                'controller' => 'Test',
-                                'action'     => 'index',
-                            ),
-                        ),
-                    ),                    
+                    ),                                        
                 ),
 
                 
@@ -131,6 +133,10 @@ return array(
                         'action' => 'logout',
                     ),
                 )
+            ),
+            'Users' => array(
+                'label' => 'Users',
+                'route' => 'admin/user'
             ),
             'Albums' => array(
                 'label' => 'Albums',
@@ -174,10 +180,6 @@ return array(
                     ),
                 )
             ),
-            'Test' => array(
-                'label' => 'Test',
-                'route' => 'admin/test'
-            )
         ),
     ),
     

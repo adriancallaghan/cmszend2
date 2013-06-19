@@ -1,0 +1,72 @@
+
+
+<?php $this->headTitle($this->title); ?>
+
+
+
+	
+<div class="row">
+           
+    <div class="span8 pull-left">
+        <h4><?php echo $this->escapeHtml($this->title); ?></h4>
+        <h5>
+            <span class="icon-user"></span> 
+            <?php 
+                echo (1==($count = $this->paginator->getTotalItemCount())) ? $count.' user' : $count.' users'; 
+            ?>
+        </h5>
+    </div>
+    
+    <div class="span4 pull-right">
+        <div class="pagination pagination-right">
+            <?php // add at the end of the file after the table
+            echo $this->paginationControl(
+                // the paginator admin
+                $this->paginator,
+                'sliding',
+                // the partial to use to render the control
+                array('partial/paginator.phtml', 'Album'),
+                // the route to link to when a user clicks a control link
+                array(
+                    'route' => 'admin/album'
+                )
+            );
+            ?>
+        </div>
+    </div>
+
+    
+    <div class="content span12">
+
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th>firstname</th>
+                <th>lastname</th>
+                <th>email</th>
+                <th>username</th>
+                <th>password</th>
+                <th>active</th>
+                <th><a href="<?php echo $this->url('admin/user', array('action'=>'add'));?>" class="btn btn-mini pull-right"><i class="icon-plus"></i></a></th>
+            </tr>
+            <?php foreach ($this->paginator as $user) : ?>
+                <tr>
+
+                    <td><?php echo $this->escapeHtml($user->firstname); ?></td>
+                    <td><?php echo $this->escapeHtml($user->lastname); ?></td>
+                    <td><?php echo $this->escapeHtml($user->email); ?></td>
+                    <td><?php echo $this->escapeHtml($user->username); ?></td>
+                    <td><?php echo join(null,array_fill(0,15,'*')); ?></td>
+                    <td><?php echo $user->active ? '<span class="badge badge-success">Y</span>' : '<span class="badge badge-important">N</span>'; ?></td>  
+                    <td>
+                        <div class="btn-group pull-right">
+                            <a href="<?php echo $this->url('admin/user',array('action'=>'edit', 'id' => $user->id));?>" class="btn"><i class="icon-pencil"></i></a>
+                            <a href="<?php echo $this->url('admin/user',array('action'=>'delete', 'id' => $user->id));?>" class="btn"><i class="icon-trash"></i></a> 
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+        
+    </div>
+    
+</div>

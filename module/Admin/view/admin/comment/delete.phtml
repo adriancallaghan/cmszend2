@@ -6,12 +6,12 @@ $this->headTitle($title);
 <div class="row">
 
     <div class="span10 container well well-large">
-        <h1><?php echo $this->escapeHtml($title); ?></h1>
-        <h3>
+        <h4><?php echo $this->escapeHtml($title); ?></h4>
+        <h5>
             Are you sure that you want to delete
             '<?php echo $this->escapeHtml($comment->message); ?>' by
             '<?php echo $this->escapeHtml($comment->author); ?>'?
-        </h3>
+        </h5>
 
         <?php
         $url = $this->url('admin/comment', array(
