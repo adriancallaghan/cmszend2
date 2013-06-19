@@ -23,7 +23,12 @@ nano config/autoload/local.php (set database credientials)
 php composer.phar self-update
 php composer.phar install
 ./vendor/bin/doctrine-module orm:schema-tool:create
-
+git remote rm origin
+git init
+git add *
+git commit -m "first commit"
+git remote add origin https://github.com/adriancallaghan/planner2.git
+git push -u origin master
 
 
 UPDATE USING GIT/COMPOSER & DOCTRINE2

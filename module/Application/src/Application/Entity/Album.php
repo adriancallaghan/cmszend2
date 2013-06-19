@@ -3,7 +3,7 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+//use Doctrine\Common\Collections\ArrayCollection;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilterAwareInterface;
@@ -137,18 +137,18 @@ class Album implements InputFilterAwareInterface
      
     public function removeComment(Comment $comment) {
         
-        throw new \Exception('Not implemented');
+        throw new \Exception('Not implemented'); // deleted by the entity manager
         /*
          * $comment->setAlbum($this);
         $comments = $this->getComments();        
         $comments[] = $comment;
         $this->setComments($comment);
          */
+        //new Collections\ArrayCollection()
         
+        //$this->comments->removeElement($comment);
         
-        $this->comments->removeElement($comment);
-        
-        $comment->unsetAlbum();
+        //$comment->unsetAlbum();
     }
  
     public function addComment(Comment $comment) {
@@ -167,8 +167,8 @@ class Album implements InputFilterAwareInterface
     {
         $this->getCreated(); // makes sure we have a default time set
     }
+            
     
-
     public function setInputFilter(InputFilterInterface $inputFilter = null)
     {
         
