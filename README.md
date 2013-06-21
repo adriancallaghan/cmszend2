@@ -15,6 +15,7 @@ Public should not be present prior to cloning from GIT, but setup in the host fi
 
 INITIAL SETUP
 -------------
+```bash
 cd ../NAMEOFNEWPROJECT
 
 git clone https://github.com/adriancallaghan/cmszend2.git NAMEOFNEWPROJECT  (will clone the project into the new project)
@@ -42,7 +43,7 @@ git commit -m "first commit"
 git remote add origin https://github.com/adriancallaghan/planner2.git
 
 git push -u origin master
-
+```
 
 UPDATE USING GIT/COMPOSER & DOCTRINE2
 -------------------------------------
