@@ -45,7 +45,7 @@
                 <th>email</th>
                 <th>username</th>
                 <th>password</th>
-                <th>active</th>
+                <th>status</th>
                 <th><a href="<?php echo $this->url('admin/user', array('action'=>'add'));?>" class="btn btn-mini pull-right"><i class="icon-plus"></i></a></th>
             </tr>
             <?php foreach ($this->paginator as $user) : ?>
@@ -56,7 +56,7 @@
                     <td><?php echo $this->escapeHtml($user->email); ?></td>
                     <td><?php echo $this->escapeHtml($user->username); ?></td>
                     <td><?php echo join(null,array_fill(0,15,'*')); ?></td>
-                    <td><?php echo $user->active ? '<span class="badge badge-success">Y</span>' : '<span class="badge badge-important">N</span>'; ?></td>  
+                    <td><?php echo $user->active ? '<span class="badge badge-success">Enabled</span>' : '<span class="badge badge-important">Disabled</span>'; ?></td>  
                     <td>
                         <div class="btn-group pull-right">
                             <a href="<?php echo $this->url('admin/user',array('action'=>'edit', 'id' => $user->id));?>" class="btn"><i class="icon-pencil"></i></a>

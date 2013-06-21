@@ -138,7 +138,7 @@ class User
         return $this->username;
     }
     
-    public function setPassword($password = 'No Password'){
+    public function setPassword($password = ''){
         $this->password = $password;
         return $this;
     }

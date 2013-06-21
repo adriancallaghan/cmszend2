@@ -155,7 +155,7 @@ class CommentController extends AbstractActionController
                 ->get('submit')->setAttribute('value', 'Edit');
 
         $form->get('album_id')
-                ->setValue((int) $comment->album->id)
+                ->setValue((int) !isset($comment->album) ? null : $comment->album->id)
                 ->setAttributes(array('options'=>$albumTitles));
         
         // process a submission

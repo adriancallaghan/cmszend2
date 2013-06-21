@@ -32,13 +32,11 @@ class UserController extends AbstractActionController
         $this->flashMessenger()->addMessage(array('alert-error'=>'Sorry, Error.')); 
         */
         
-        $identity = $this->identity()->getId();
-        var_dump($identity);
-        
+
         
         return new ViewModel(array(
-            'title'     => 'Example page',
-            'content'   => 'This should be changed in the router to resolve to a controller within the Admin section',
+            'title'     => 'Hi! '.$identity = $this->identity()->getFirstname(),
+            'content'   => 'This is an example page and should be changed in the router',
             'flashMessages' => $this->flashMessenger()->getMessages()
         ));
 
@@ -87,7 +85,7 @@ class UserController extends AbstractActionController
         
         
         if ($this->getRequest()->isPost() && $form->isValid()) {                
-            $user->setOptions($form->getData()); // set the data            
+            $user->setOptions($form->getData()); // set the data     
             $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager'); // entity manager
             $em->persist($user); // set data
             $em->flush(); // save      
@@ -125,21 +123,55 @@ class UserController extends AbstractActionController
             ));
         }
 
+
+        
         // setup form
         // (validation, data and button)
         $form->setInputFilter($user->getInputFilter())
                 ->setData($user->toArray())
                 ->get('submit')->setAttribute('value', 'Edit');
 
-
+                    
+        
+        // remove the original password from being displayed
+        $form->get('password')
+                ->setLabel('Password (Leave blank to keep the old password)')
+                ->setValue('');
+        
+        
+        
         // process a submission
         if ($this->getRequest()->isPost()) {
             
-            $form->setData($this->getRequest()->getPost()); // set the form with the submitted values
+            
+            
+            /*
+             * The original password would have been removed from the form above to prevent it being displayed on the screen
+             * 
+             * It will now fail validation so we need to put it back in, 
+             * 
+             * if the post submission does not contain a new password reinstate the password from the user object to password property
+             * 
+             * if the post submission does contain a new password, encyrpt the password submission and assign it the password property 
+             * 
+             * whatever is stored in the password property will be saved each time along with the rest of the object
+             */  
+            
+            $this->getRequest()->getPost()->password = 
+                    $this->getRequest()->getPost()->password=='' ? 
+                        $this->getRequest()->getPost()->password = $user->password : 
+                        md5($this->getRequest()->getPost()->password);
 
+            
+                      
+            
+            
+            $form->setData($this->getRequest()->getPost()); // set the form with the submitted values
+            
+            
             // is valid?
             if ($form->isValid()) {
-                
+
                 $user->setOptions($form->getData()); // set the data    
                 $user->id = $id;        
                 $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager'); // entity manager

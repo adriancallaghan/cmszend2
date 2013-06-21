@@ -44,7 +44,7 @@
                                 <i class="icon-user icon-white"></i>&nbsp;<?php echo $this->escapeHtml($this->identity()->getUsername()); ?>&nbsp;<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">  
-                                <li><a href="<?php echo $this->url('admin/user', array('action' => 'edit','id'=>$this->identity()->getId())); ?>"><i class="icon-user"></i> Change Password</a></li>
+                                <li><a href="<?php echo $this->url('admin/user', array('action' => 'edit','id'=>$this->identity()->getId())); ?>"><i class="icon-user"></i> Edit</a></li>
                                 <li class="divider"></li>
                                 <li><a href="<?php echo $this->url('admin/logout', array()); ?>"><i class="icon-lock"></i></i> Logout</a></li>
                             </ul>
