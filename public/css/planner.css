@@ -1,0 +1,87 @@
+/*
+
+
+   @app    planner 
+   @author Adrian Callaghan 
+   @date   01092013
+
+
+*/
+html {
+    height: 100%;
+}
+
+body {
+    padding: 60px 0 40px 0;
+    position:relative;
+    height: -moz-calc(100% - 200px); /* Firefox */
+    height: -webkit-calc(100% - 200px); /* WebKit */
+    height: -o-calc(100% - 200px); /* Opera */
+    height: calc(100% - 200px); /* Standard */    
+}
+
+/*
+Block level elements
+*/
+div.main-navigation{}
+div.main-message {}
+div.main-content {height:100%; min-height:100%;}
+.dates {padding:20px 0;}
+.dates-header{background:#efefef;}
+.dates-content{}
+
+/*
+Specific formatting
+*/
+
+div.date{border:1px solid #DDDDDD; border-bottom: none; padding:5px 0;}
+div.date:nth-child(odd){background:#F9F9F9;} 
+div.date:nth-child(even){background:#fff;} 
+div.date.current {background:#FCF8E3;color:#C09853; border:1px solid #FBEED5;}
+div.date-transactions ul,div.date-transactions ul li {min-height: 20px;}
+
+.date-transaction {border:1px solid #000; margin:2px 5px; padding:5px; border-radius:4px;} 
+.date-transaction.positive {background:#DFF0D8; border-color:#D6E9C6; color:#468847;}
+.date-transaction.negative {background:#F2DEDE; border-color:#EED3D7; color:#B94A48;}
+.date-transaction input {margin:0;}
+
+
+/*
+Bootstrap allowing scrollbars (removes 20px from width)
+*/
+.span1-scrollable {width:40px;} /* was 60px */
+.span2-scrollable {width:120px;} /* was 140px */
+.span3-scrollable {}
+.span4-scrollable {}
+.span5-scrollable {}
+.span6-scrollable {}
+.span7-scrollable {}
+.span8-scrollable {}
+.span9-scrollable {width:680px;} /* was 700px; */
+.span10-scrollable {width:760px;} /* was 780px */
+.span11-scrollable {}
+.span12-scrollable {}
+
+
+
+
+/* Height tricks */
+.height-fill {min-height:100%;}
+.height-fill-locked {height:100%;}
+.height-hidden {overflow-y: hidden;}
+.height-scroll {overflow-y: scroll;}
+
+
+
+
+/* JQUERY UI PLACEHOLDER */
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important;}
+.ui-sortable-placeholder * { visibility: hidden;}
+
+
+/* USED FOR DEBUGGING ELEMENTS */
+.bgd-yellow {background:yellow;}
+.bgd-red {background:#ffaaaa;}
+.bgd-blue {background:#aaaaff;}
+.bgd-green {background:#aaffaa;}
+

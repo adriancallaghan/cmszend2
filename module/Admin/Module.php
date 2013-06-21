@@ -42,7 +42,6 @@ class Module
     
     
     
-    
     public function init(ModuleManager $mm)
     {
         // tells the last module, to have the following rules applied to it
@@ -62,7 +61,9 @@ class Module
         });
     }
     
-  
+    
+    
+    
     public function restrictAccess(MvcEvent $e, array $whiteListed = array(), $loginRouteName = 'admin/login'){
         
         // $loginRouteName is whitelisted from the redirection
@@ -70,29 +71,29 @@ class Module
         // additional routes can be whitelisted        
         if (!$e->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService')->hasIdentity()) {
                 
-                $whiteListed[] = $loginRouteName;
-            
-                $match = $e->getRouteMatch();
+            $whiteListed[] = $loginRouteName;
 
-                // No route match, this is a 404
-                if (!$match instanceof RouteMatch) {
-                    return;
-                }
+            $match = $e->getRouteMatch();
 
-                // Login route is whitelisted
-                if (in_array($match->getMatchedRouteName(), $whiteListed)) {
-                    return;
-                }
-                
-                // login url from login route
-                $url = $e->getRouter()->assemble(array(), array('name' => $loginRouteName));
+            // No route match, this is a 404
+            if (!$match instanceof RouteMatch) {
+                return;
+            }
 
-                // redirect response
-                $response = $e->getResponse();
-                $response->getHeaders()->addHeaderLine('Location', $url);
-                $response->setStatusCode(302);
+            // Login route is whitelisted
+            if (in_array($match->getMatchedRouteName(), $whiteListed)) {
+                return;
+            }
 
-                return $response;
+            // login url from login route
+            $url = $e->getRouter()->assemble(array(), array('name' => $loginRouteName));
+
+            // redirect response
+            $response = $e->getResponse();
+            $response->getHeaders()->addHeaderLine('Location', $url);
+            $response->setStatusCode(302);
+            $response->sendHeaders();
+            exit;
         }
         
     }

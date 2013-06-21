@@ -35,7 +35,7 @@ class UserController extends AbstractActionController
 
         
         return new ViewModel(array(
-            'title'     => 'Hi! '.$identity = $this->identity()->getFirstname(),
+            'title'     => 'Hi! '.$this->identity()->getFirstname(),
             'content'   => 'This is an example page and should be changed in the router',
             'flashMessages' => $this->flashMessenger()->getMessages()
         ));
