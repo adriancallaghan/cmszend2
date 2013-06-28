@@ -32,8 +32,6 @@ class UserController extends AbstractActionController
         $this->flashMessenger()->addMessage(array('alert-error'=>'Sorry, Error.')); 
         */
         
-
-        
         return new ViewModel(array(
             'title'     => 'Hi! '.$identity = $this->identity()->getFirstname(),
             'content'   => 'This is an example page and should be changed in the router',
@@ -155,15 +153,13 @@ class UserController extends AbstractActionController
              * if the post submission does contain a new password, encyrpt the password submission and assign it the password property 
              * 
              * whatever is stored in the password property will be saved each time along with the rest of the object
-             */  
-            
+             */              
             $this->getRequest()->getPost()->password = 
                     $this->getRequest()->getPost()->password=='' ? 
                         $this->getRequest()->getPost()->password = $user->password : 
                         md5($this->getRequest()->getPost()->password);
 
             
-                      
             
             
             $form->setData($this->getRequest()->getPost()); // set the form with the submitted values

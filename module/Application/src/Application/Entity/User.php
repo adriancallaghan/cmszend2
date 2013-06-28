@@ -152,7 +152,7 @@ class User
     }
     
     
-    public function setCreated($created = null){
+    public function setCreated(\DateTime $created = null){
         
         if ($created==null){
             $created = new \DateTime("now");

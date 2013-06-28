@@ -115,7 +115,7 @@ class Comment //implements InputFilterAwareInterface
         return $this->email;
     }  
     
-    public function setDated($dated = null){
+    public function setDated(\DateTime $dated = null){
         
         if ($dated==null){
             $dated = new \DateTime("now");
