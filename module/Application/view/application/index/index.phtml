@@ -1,107 +1,142 @@
 
+<div class="hero-unit title">
+    <h4>Json test</h4>
+    Use firebug to see the response
+    <h5>Url: <span id="url">/rest</span></h5>
+    Update & get, can fail because the the server responds with an error, this is because the id used is random and it is not always found on the server
+</div>
 
-<div class="dates height-fill height-fill-locked row height-hidden">
+<div class="row">
 
-    
-    <!-- Header -->
-    <div class="dates-header span12">
-        <div class="row">
-            
-            <div class="span1">
-                <button class="btn btn-block">Date</button>
-            </div>
-            
-            <div class="span2">
-                <button class="btn btn-block">Balance</button>
-            </div>
-
-            <div class="btn-group span9">
-                <a href="#" class="btn dropdown-toggle btn-block" data-toggle="dropdown">
-                    &pound;321.53 on Saturday 1st of May 2013&nbsp;<span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu pull-right">
-                    <li><a href="#myModal" role="button" data-toggle="modal"><i class="icon-pencil"></i> Add Transaction</a></li>
-                    <li><a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i> Change Date</a></li>
-                </ul>
-            </div>
-                
-            
-        </div>
+    <div class="span2">
+        <div class="btn-group btn-group-vertical">        
+            <button class="btn list btn-inverse">List /</button>
+            <button class="btn get btn-inverse">Get / ID</button> 
+            <button class="btn post btn-inverse">Create / POST</button>
+            <button class="btn put btn-inverse">Update / PUT</button>
+            <button class="btn delete btn-danger">Delete / DELETE</button>
+        </div>     
     </div>
-    <!-- Header -->
-    
-
-
-    <!-- Content -->
-    <div class="dates-content span12 height-fill-locked height-scroll">
-        <?php foreach($this->dates AS $dateKey=>$dateVal) : ?>
-            
-            <!-- date -->
-            <div class="date <?php if ($this->todayKey==$dateKey) echo 'current'; ?> row">
-                
-                <!-- Date -->
-                <div class='date-title span1'>
-                    <?php echo date('jS M',$dateVal->unix); ?>
-                </div>
-
-                <!-- Balance -->
-                <div class="date-balance span2 <?php echo $dateVal->balance==0 ? 'neutral' : $dateVal->balance>0 ? 'positive' : 'negative'; ?>">
-                    &pound; <?php echo $dateVal->balance; ?>
-                </div>                
-                
-                <div class="date-transactions span9-scrollable" >
-                        
-
-                    <ul id="<?php echo $dateKey; ?>" class="inline">
-
-                        <?php foreach ($dateVal->transactions AS $transKey=>$transVal) : ?>
-
-                            <li 
-                                id="<?php echo $transKey; ?>" 
-                                class="date-transaction <?php echo $transVal->amount>0 ? 'positive' : 'negative'; ?> span4"
-                                >                                
-                                <input type="text" placeholder="&pound;<?php echo $transVal->amount; ?>" class="span2"> 
-                                <input type="text" placeholder="<?php echo $transVal->type; ?>" class="span2"> 
-                                <a href="" class="pull-right">x</a>
-                            </li>
-                            
-                        <?php endforeach; ?>
-                    </ul> 
-                    
-                    
-                </div>
-
-            </div>
-        <?php endforeach; ?> 
+        
+    <div class="span10">
+        <pre class="output" style="height:150px;"></pre>
     </div>
-    <!-- Content -->
-    
-    
+        
 </div>
 
 
 
+<script type="text/javascript">
 
-<script type='text/javascript'>
+
+    var url = $('#url').text();
+    var outputElem = $('pre.output');
+    var listElem = $('.list');  
+    var getElem = $('.get');  
+    var postElem = $('.post');  
+    var putElem = $('.put');  
+    var deleteElem = $('.delete');  
     
-    $(function() {
+    // random vars
+    var ids = [<?php echo implode(',', $this->test_ids); ?>];
+    var artists = ['Artist1','Artist2','Artist3','Artist4'];
+    var titles = ['Title1','Title2','Title3','Title4'];
+ 
 
-        $(".date-transactions ul").sortable({
-            connectWith: ".date-transactions ul",
-            opacity: 0.6, 
-            cursor: 'move',
-            update : function(e, ui) {
-                var id = ui.item.attr('id');
-                var to = $(this).attr('id');
-                console.log('id: ' + id + ' to: ' + to);
-                console.log('order: ')
-                console.log($(this).children());
-            }
+    $().ready(function(){
+        
+        // demo list interaction
+        listElem.click(function(){
+            
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(response) {
+                    outputElem.text('List: ' + JSON.stringify(response.data)); 
+                }
+            });
+            
+        });
+        
+        
+        // get interaction
+        getElem.click(function(){
+            
+            var random_id = ids[Math.floor(Math.random()*ids.length)];
+                        
+            $.ajax({
+                url: url + '/' + random_id,
+                type: 'GET',
+                success: function(response) {
+                    outputElem.text('Get: ' + JSON.stringify(response.data)); 
+                },
+                error: function(jqXHR, textStatus, error){
+                    outputElem.text('Failed: ' + error); 
+                }
+            });
+            
+        });
+        
+        
+        // post (add) interaction
+        postElem.click(function(){
+            
+            var random_artist = artists[Math.floor(Math.random()*artists.length)];
+            var random_title = titles[Math.floor(Math.random()*titles.length)];
+             
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {artist:random_artist,title:random_title},
+                success: function(response) {
+                    outputElem.text('Added: ' + JSON.stringify(response.data));                    
+                }
+            });
+            
+            
+        });
+        
+        
+        // put (update) interaction
+        putElem.click(function(){
+            
+            var random_id = ids[Math.floor(Math.random()*ids.length)];
+            var random_artist = artists[Math.floor(Math.random()*artists.length)];
+            var random_title = titles[Math.floor(Math.random()*titles.length)];
+            
+            $.ajax({
+                url: url + "/" + random_id,
+                type: 'PUT',
+                data: {artist:random_artist,title:random_title},
+                success: function(response) {
+                    outputElem.text('Updated: ' + JSON.stringify(response.data)); 
+                },
+                error: function(jqXHR, textStatus, error){
+                    outputElem.text('Failed: ' + error); 
+                }
+            });
+           
+            
+        });
+        
+      
+        // delete interaction
+        deleteElem.click(function(){
+            
+            var random_id = ids[Math.floor(Math.random()*ids.length)];
+            
+            $.ajax({
+                url: url + "/" + random_id,
+                type: 'DELETE',
+                success: function(response) {
+                    outputElem.text('Deleted: ' + JSON.stringify(response.data)); 
+                }
+            });
 
         });
-
+      
     });
-</script>
 
+</script>
 
 
