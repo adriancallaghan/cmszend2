@@ -8,7 +8,7 @@ return array(
         'DoctrineModule',
         'DoctrineORMModule',
         'Application',
-        'Admin',
+        //'Admin',
         'Rest',              
         'DluTwBootstrap',
         //'DluTwBootstrapDemo', // url is /tw-bootstrap-demo        

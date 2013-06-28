@@ -3,47 +3,104 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle('Prepended '. $this->translate('Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
         <!-- Le styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        <?php /*echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
                         ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') */?>
+        <?php echo $this->headLink()
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/planner.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') 
+                        ->prependStylesheet('http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css') ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
                                       ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+                                      ->prependFile($this->basePath() . '/js/jquery.min.js') 
+                                      ->prependFile('http://code.jquery.com/ui/1.10.2/jquery-ui.js') ?>
 
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        
+        <!-- Nav bar -->
+        <div class="main-navigation navbar navbar-fixed-top">
             <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Skeleton Application') ?></a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
+              <div class="container">
+                  <a href="<?php echo $this->url('home') ?>" class="brand">Home</a>
+                  <div class="nav-collapse collapse">
+                      <?php
+                        echo $this->navigation('navigation')
+                            ->menu()
+                            ->setMinDepth(0)
+                            ->setMaxDepth(0)
+                            ->setUlClass('nav')
+                            ->render();
+                        ?>
+                      <form class="navbar-search pull-right">
+                          <input type="text" class="search-query" placeholder="Filter">
+                      </form>
+                  </div>
+              </div>
             </div>
         </div>
-        <div class="container">
+
+        <div class="main-content container">
+            
+            <?php
+            
+            $ourView = current($this->viewModel()->getCurrent()->getChildren());
+
+            if (isset($ourView->flashMessages) && count($ourView->flashMessages)) : ?>
+                
+                    <?php foreach ($ourView->flashMessages as $message) : ?>
+
+                        <div class="main-message alert <?php echo is_array($message) ? key($message) : ''; ?>">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <!--h4><?php echo is_array($message) ? strtolower(str_replace('alert-', '', key($message))) : 'alert';?>!</h4-->
+                            <?php echo is_array($message) ? current($message) : $message; ?>
+                        </div>
+                    
+                    <?php endforeach; ?>
+            
+            <?php endif; ?>
+            
+            
             <?php echo $this->content; ?>
-            <hr>
+            
+            
+            <!--
+            Example content, a nested grid layout that could be used within the content
+            <div class="row">
+                <div class="span4 bgd-green">
+                    <div class="row">
+                        <div class="span1 bgd-red">green</div>
+                        <div class="span3 bgd-red">green</div>  
+                    </div>
+                </div>
+                <div class="span4 bgd-red">red</div>
+                <div class="span4 bgd-blue">blue</div>
+            </div>
+
+            -->
+            
+            
+            
+            <!--hr>
             <footer>
-                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
-            </footer>
+                <p>&copy; 2012 - <?php echo date('Y') ?> Testing</p>
+            </footer>-->    
+            
+            
         </div> <!-- /container -->
+        
+        
         <?php echo $this->inlineScript() ?>
+        
+        
     </body>
 </html>
